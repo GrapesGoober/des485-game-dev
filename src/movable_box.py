@@ -1,6 +1,6 @@
 import pygame
 from lib import Frame, GameObject, World, Sprite
-from grid_sprites import GridSprites
+from src.grid_sprites import GridSprites
 
 SIZE = 100, 100
 COLOR = (255, 255, 255)
