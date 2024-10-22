@@ -6,7 +6,7 @@
     },
     {
         "key": null,
-        "location": "src.movable_box.MovableBox",
+        "location": "src.tests.movable_box.MovableBox",
         "metadata": {
             "grid_position": [2, 2]
         }
