@@ -14,7 +14,9 @@ class GridObject(GameObject):
             `parent_object`     Optional parent GameObject that this GridObject belongs to
         
         Static Method:
+            `get_objects`       Get list of all objects in a world.
             `get_objects_at`    Generator to get objects in a world within `manhat_dist` of `grid_position`.
+            `is_occupied`       Boolean check whether a `manhat_dist` around `grid_position` is occupied.
     """
 
     def __init__(self, grid_position: tuple[int, int]) -> None:
