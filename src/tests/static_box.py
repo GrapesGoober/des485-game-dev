@@ -1,6 +1,6 @@
 import pygame
-from lib import Frame, GameObject, World, Sprite
-from src.grid_object import GridObject
+from lib import GameObject, World, Sprite
+from src.grid_position import GridPosition
 
 SIZE = 100, 100
 COLOR = (255, 255, 255)
@@ -12,7 +12,7 @@ class StaticBox(GameObject):
         self.sprite.src_image.fill(COLOR)
         self.sprite.x = grid_position[0] * SIZE[0]
         self.sprite.y = grid_position[1] * SIZE[1]
-        self.position = GridObject(grid_position)
+        self.position = GridPosition(grid_position)
 
     def on_create(self, world: World) -> None:
         world.sprites.add(self.sprite)
