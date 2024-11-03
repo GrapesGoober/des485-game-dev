@@ -1,0 +1,33 @@
+[
+    {
+        "key": "PLAYER",
+        "location": "src.prototype.rat.Rat",
+        "metadata": {
+            "grid_position": [5, 5]
+        }
+    },
+    {
+        "key": null,
+        "location": "src.prototype.tree.Tree",
+        "metadata": {
+            "grid_position": [6, 6],
+            "has_cat": false
+        }
+    },
+    {
+        "key": null,
+        "location": "src.prototype.tree.Tree",
+        "metadata": {
+            "grid_position": [7, 7],
+            "has_cat": false
+        }
+    },
+    {
+        "key": null,
+        "location": "src.prototype.tree.Tree",
+        "metadata": {
+            "grid_position": [8, 8],
+            "has_cat": true
+        }
+    }
+]
