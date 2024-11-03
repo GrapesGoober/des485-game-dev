@@ -27,7 +27,7 @@ class MovableBox(GameObject):
                     case pygame.K_s: next_y += 1
                     case pygame.K_d: next_x += 1
 
-        if not GridPosition.is_occupied(world, (next_x, next_y)):
+        if not GridPosition.has_objects_at(world, (next_x, next_y)):
             self.position.grid_position = (next_x, next_y)
 
         self.sprite.x = self.position.grid_x * SIZE[0]

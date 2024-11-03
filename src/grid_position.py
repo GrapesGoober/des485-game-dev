@@ -41,6 +41,10 @@ class GridPosition(GameObject):
             objects: list[GridPosition] = world.global_states[_OBJECTS_KEY]
             objects.remove(self)
 
+    def get_neighbours(self, world, manhat_dist: int = 0):
+        for o in GridPosition.get_objects_at(world, (self.grid_x, self.grid_y), manhat_dist):
+            if o != self: yield o
+
     @staticmethod
     def get_objects(world: World) -> list['GridPosition']:
         assert _OBJECTS_KEY in world.global_states, f"key {_OBJECTS_KEY} is missing"
@@ -53,8 +57,7 @@ class GridPosition(GameObject):
                 yield o
 
     @staticmethod
-    def is_occupied(world: World, at: tuple[int, int], manhat_dist: int = 0) -> bool:
-        for o in GridPosition.get_objects(world):
-            if abs(o.grid_x - at[0]) + abs(o.grid_y - at[1]) <= manhat_dist:
-                return True
+    def has_objects_at(world: World, at: tuple[int, int], manhat_dist: int = 0) -> bool:
+        for _ in GridPosition.get_objects_at(world, at, manhat_dist):
+            return True
         return False
