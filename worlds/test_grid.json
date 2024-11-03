@@ -10,5 +10,12 @@
         "metadata": {
             "grid_position": [2, 2]
         }
+    },
+    {
+        "key": null,
+        "location": "src.tests.static_box.StaticBox",
+        "metadata": {
+            "grid_position": [2, 3]
+        }
     }
 ]
