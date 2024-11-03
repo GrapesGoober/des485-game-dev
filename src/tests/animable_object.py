@@ -1,6 +1,5 @@
 import pygame
-from lib import Frame, GameObject, World, Sprite
-from src.grid_sprites import GridSprites
+from lib import Frame, GameObject, World
 from src.animation_sprite import AnimationSprite
 
 SIZE = 100, 100
