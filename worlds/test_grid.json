@@ -1,0 +1,21 @@
+[
+    {
+        "key": null,
+        "location": "src.camera_controller.CameraController",
+        "metadata": {}
+    },
+    {
+        "key": null,
+        "location": "src.tests.movable_box.MovableBox",
+        "metadata": {
+            "grid_position": [2, 2]
+        }
+    },
+    {
+        "key": null,
+        "location": "src.tests.static_box.StaticBox",
+        "metadata": {
+            "grid_position": [2, 3]
+        }
+    }
+]
