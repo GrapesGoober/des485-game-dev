@@ -2,17 +2,19 @@ import pygame
 
 def get_sprites_list(
         sheet: pygame.Surface, 
-        tile_size: tuple[int, int]
+        tile_size: tuple[int, int],
+        scale_size: tuple[int, int] = (1, 1)
     ) -> list[pygame.Surface]:
     """
-    Returns a list of sprites from a single larger tile sprite sheet.
+    Returns a list of many sprites from a single larger tile sprite sheet. 
     This always set the colorkey to transparent alpha.
+
+    Arguments:
+        `sheet`         pygame Surface object for the entire sprite sheet
+        `tile_size`     the width and height for each sprite tile
+        `scale_size`    optional rescaling factor multiplied to each sprite
     
-    Arguments: 
-        - `sheet` pygame Surface object for the entire sprite sheet
-        - `tile_size` the width and height for each sprite tile
-    
-    Return: a list of `Surface`, each with size of `tile_size`
+    Return: a list of `Surface`
     """
 
     img_width, img_height = sheet.get_size()
@@ -28,5 +30,9 @@ def get_sprites_list(
             tile = pygame.Surface((tile_width, tile_height))
             tile.blit(sheet, (0, 0), (x*tile_width, y*tile_height, tile_width, tile_height))
             tile.set_colorkey((0,0,0,0), pygame.RLEACCEL)
+            tile = pygame.transform.scale(tile, (
+                tile_size[0] * scale_size[0],
+                tile_size[1] * scale_size[1],
+            ))
             return_list.append(tile)
     return return_list
