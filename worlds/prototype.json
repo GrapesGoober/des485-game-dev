@@ -7,6 +7,13 @@
         }
     },
     {
+        "key": "INVENTORY",
+        "location": "src.prototype.inventory.Inventory",
+        "metadata": {
+            "position": [0, 0]
+        }
+    },
+    {
         "key": null,
         "location": "src.prototype.tree.Tree",
         "metadata": {
@@ -32,7 +39,7 @@
     },
     {
         "key": null,
-        "location": "src.prototype.items.test_item.TestItem",
+        "location": "src.prototype.items.test_item.TestItemProp",
         "metadata": {
             "grid_position": [10, 10]
         }
