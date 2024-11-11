@@ -8,9 +8,9 @@
     },
     {
         "key": "INVENTORY",
-        "location": "src.prototype.inventory.Inventory",
+        "location": "src.prototype.inventory.InventoryGUI",
         "metadata": {
-            "position": [0, 0]
+            "position": [1180, 100]
         }
     },
     {
