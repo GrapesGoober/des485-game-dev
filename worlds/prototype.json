@@ -39,7 +39,7 @@
     },
     {
         "key": null,
-        "location": "src.prototype.items.test_item.TestItemProp",
+        "location": "src.prototype.items.test_item.TestItem",
         "metadata": {
             "grid_position": [10, 10]
         }
