@@ -6,6 +6,7 @@ from src.prototype.diceroll import DiceRoll
 
 SIZE = 20, 20
 COLOR = (255, 255, 255)
+DICE_KEY = "DICE"
 
 class Rat(GameObject):
     def __init__(self, grid_position: tuple[int, int]) -> None:
@@ -16,11 +17,13 @@ class Rat(GameObject):
         self.position.parent_object = self
 
         # Test Dice
-        self.diceroll = DiceRoll([5, 5])
+        self.diceroll: DiceRoll = None
 
     def on_create(self, world: World) -> None:
         world.sprites.add(self.sprite)
         world.add(self.position)
+        self.diceroll = world.global_states.get(DICE_KEY)
+        assert self.diceroll, f"Missing '{DICE_KEY}'"
 
     def on_remove(self, world: World) -> None:
         world.sprites.remove(self.sprite)
@@ -40,7 +43,6 @@ class Rat(GameObject):
         
         if self.diceroll.walk_step == 0:
             self.diceroll.can_walk = False
-            self.diceroll.on_update(world, frame)
         for event in frame.events:
             # Test Dice
             if event.type == pygame.KEYDOWN:

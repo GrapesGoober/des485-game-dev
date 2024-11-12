@@ -10,7 +10,7 @@
         "key": "DICE",
         "location": "src.prototype.diceroll.DiceRoll",
         "metadata": {
-            "grid_position": [15, 15]
+            "position": [50, 50]
         }
     },
     {
