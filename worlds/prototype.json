@@ -7,6 +7,13 @@
         }
     },
     {
+        "key": "DICE",
+        "location": "src.prototype.diceroll.DiceRoll",
+        "metadata": {
+            "grid_position": [15, 15]
+        }
+    },
+    {
         "key": "INVENTORY",
         "location": "src.prototype.inventory.Inventory",
         "metadata": {
