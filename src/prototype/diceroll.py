@@ -31,6 +31,10 @@ class DiceRoll(GameObject):
         world.sprites.remove(self.sprite)
 
     def on_update(self, world: World, frame: Frame) -> None:
+        
+        if self.walk_step == 0:
+            self.can_walk = False
+
         if not self.can_walk and self.walk_step == 0: 
             if self.start_time is None:
                 self.start_time = pygame.time.get_ticks()

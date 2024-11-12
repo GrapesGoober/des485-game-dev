@@ -41,8 +41,6 @@ class Rat(GameObject):
 
     def on_update(self, world: World, frame: Frame) -> None:
         
-        if self.diceroll.walk_step == 0:
-            self.diceroll.can_walk = False
         for event in frame.events:
             # Test Dice
             if event.type == pygame.KEYDOWN:
