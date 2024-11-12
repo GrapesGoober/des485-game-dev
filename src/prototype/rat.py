@@ -46,7 +46,7 @@ class Rat(GameObject):
         for event in frame.events:
             # Test Dice
             if event.type == pygame.KEYDOWN:
-                if self.diceroll.can_walk and self.diceroll.walk_step != 0:    
+                if self.diceroll.can_walk:    
                     match event.key:
                         case pygame.K_w: self.move(( 0, -1), world)
                         case pygame.K_a: self.move((-1,  0), world)
