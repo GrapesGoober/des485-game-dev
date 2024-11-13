@@ -6,24 +6,19 @@ from src.prototype.diceroll import DiceRoll
 
 SIZE = 20, 20
 COLOR = (255, 255, 255)
-DICE_KEY = "DICE"
 
 class Rat(GameObject):
-    def __init__(self, grid_position: tuple[int, int]) -> None:
+    def __init__(self, dice: DiceRoll, grid_position: tuple[int, int]) -> None:
         self.sprite = Sprite()
         self.sprite.src_image = pygame.Surface(SIZE)
         self.sprite.src_image.fill(COLOR)
         self.position = GridPosition(grid_position)
         self.position.parent_object = self
-
-        # Test Dice
-        self.diceroll: DiceRoll = None
+        self.diceroll: DiceRoll = dice
 
     def on_create(self, world: World) -> None:
         world.sprites.add(self.sprite)
         world.add(self.position)
-        self.diceroll = world.global_states.get(DICE_KEY)
-        assert self.diceroll, f"Missing '{DICE_KEY}'"
 
     def on_remove(self, world: World) -> None:
         world.sprites.remove(self.sprite)
