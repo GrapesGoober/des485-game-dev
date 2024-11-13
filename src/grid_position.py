@@ -1,7 +1,7 @@
-from typing import Callable
-from lib import Frame, GameObject, World
+from lib import GameObject, World
 
-_OBJECTS_KEY = "GRID_OBJECTS"
+# using this data pool to check/find neighbours
+POOL: dict[World, list['GridPosition']] = {}
 
 class GridPosition(GameObject):
     """
@@ -31,15 +31,13 @@ class GridPosition(GameObject):
         self.grid_x, self.grid_y = val
 
     def on_create(self, world: World) -> None:
-        if _OBJECTS_KEY not in world.global_states:
-            world.global_states[_OBJECTS_KEY] = []
-        objects: list[GridPosition] = world.global_states[_OBJECTS_KEY]
-        objects.append(self)
+        if world not in POOL:
+            POOL[world] = []
+        POOL[world].append(self)
 
     def on_remove(self, world: World) -> None:
-        if _OBJECTS_KEY in world.global_states:
-            objects: list[GridPosition] = world.global_states[_OBJECTS_KEY]
-            objects.remove(self)
+        if world in POOL:
+            POOL[world].remove(self)
 
     def get_neighbours(self, world, manhat_dist: int = 0):
         for o in GridPosition.get_objects_at(world, (self.grid_x, self.grid_y), manhat_dist):
@@ -47,8 +45,7 @@ class GridPosition(GameObject):
 
     @staticmethod
     def get_objects(world: World) -> list['GridPosition']:
-        assert _OBJECTS_KEY in world.global_states, f"key {_OBJECTS_KEY} is missing"
-        return world.global_states[_OBJECTS_KEY]
+        return POOL[world]
 
     @staticmethod
     def get_objects_at(world: World, at: tuple[int, int], manhat_dist: int = 0):
