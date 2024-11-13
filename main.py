@@ -21,8 +21,8 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT: pygame.quit(), exit()
         dt = clock.tick(FPS)/1000
         pygame.display.set_caption(f"basic game template, FPS = {int(1/dt)}")
-        world.update(events, dt)
         screen.fill((0, 0, 0))
+        world.update(events, dt)
         world.draw(screen)
         pygame.display.update()
 

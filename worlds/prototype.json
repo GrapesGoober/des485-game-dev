@@ -7,6 +7,13 @@
         }
     },
     {
+        "key": "INVENTORY",
+        "location": "src.prototype.inventory.InventoryGUI",
+        "metadata": {
+            "position": [1180, 100]
+        }
+    },
+    {
         "key": null,
         "location": "src.prototype.tree.Tree",
         "metadata": {
