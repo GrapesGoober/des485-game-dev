@@ -119,14 +119,16 @@ class World:
         self.gameobjects += objects_to_add
         for gameobj in objects_to_add: gameobj.on_create(self)
 
-    def add(self, gameobj: GameObject) -> None:
-        self.gameobjects.append(gameobj)
-        gameobj.on_create(self)
+    def add(self, *gameobjects: GameObject) -> None:
+        for gameobj in gameobjects:
+            self.gameobjects.append(gameobj)
+            gameobj.on_create(self)
 
-    def remove(self, gameobj: GameObject) -> None:
-        if gameobj in self.gameobjects:
-            self.gameobjects.remove(gameobj)
-            gameobj.on_remove(self)
+    def remove(self, *gameobjects: GameObject) -> None:
+        for gameobj in gameobjects:
+            if gameobj in self.gameobjects:
+                self.gameobjects.remove(gameobj)
+                gameobj.on_remove(self)
 
     def update(self, events: list[pygame.event.Event], dt: float) -> None:
         for gameobj in self.gameobjects: 
