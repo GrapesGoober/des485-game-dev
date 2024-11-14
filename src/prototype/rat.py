@@ -32,7 +32,6 @@ class Rat(GameObject):
         if not GridPosition.has_objects_at(world, (next_x, next_y)):
             self.position.grid_position = (next_x, next_y)
             self.diceroll.walk_step -= 1 
-            print("rat remaining walk_step ", self.diceroll.walk_step)     
 
     def on_update(self, world: World, frame: Frame) -> None:
         

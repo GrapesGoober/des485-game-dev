@@ -1,28 +1,36 @@
 import pygame
+from src.animation_loop import AnimationLoop
 from lib import Frame, GameObject, World, Sprite
 from src.grid_position import GridPosition
 import random
 
-SIZE = 20, 20
-COLOR = (0, 255, 0)
+def gen_dice_face() -> pygame.Surface:
+    f = pygame.Surface((50, 50))
+    f.fill((
+        random.randrange(100,255), 
+        random.randrange(100,255), 
+        random.randrange(100,255)
+    ))
+    return f
+
+DICE_FACES = [
+    (1, gen_dice_face()),
+    (2, gen_dice_face()),
+    (3, gen_dice_face()),
+    (4, gen_dice_face()),
+    (5, gen_dice_face()),
+    (6, gen_dice_face()),
+]
 
 class DiceRoll(GameObject):
     def __init__(self, position: tuple[int, int]) -> None:
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.Surface(SIZE)
-        self.sprite.src_image.fill(COLOR)
+        self.dice_anim = AnimationLoop([], is_looping=False)
         self.sprite.position = position
 
         # Test Dice
-        self.walk_step = 5
+        self.walk_step = 0
         self.can_walk = True
-        self.start_time = None 
-
-    # Test Dice 
-    def random_walk_step(self):
-        self.walk_step = random.randint(1, 6)
-        self.start_time = pygame.time.get_ticks()  
-        print("--------- Diceroll Regenerated walk step: ", self.walk_step)
 
     def on_create(self, world: World) -> None:
         world.sprites.add(self.sprite)
@@ -31,19 +39,16 @@ class DiceRoll(GameObject):
         world.sprites.remove(self.sprite)
 
     def on_update(self, world: World, frame: Frame) -> None:
-        
-        if self.walk_step == 0:
-            self.can_walk = False
 
-        if not self.can_walk and self.walk_step == 0: 
-            if self.start_time is None:
-                self.start_time = pygame.time.get_ticks()
-            
-            current_time = pygame.time.get_ticks()
-            elapsed_time = (current_time - self.start_time) / 1000 
-            print(f"DiceRoll Count to 4 before unfreezing rat: ", elapsed_time)
+        # ran out of moves => start rolling dice
+        if self.walk_step == 0: 
+            roll_times = 10
+            rolls = [
+                random.choice(DICE_FACES) for _ in range(roll_times)
+            ]
+            self.dice_anim.reset()
+            self.dice_anim.image_list = [r[1] for r in rolls]
+            self.walk_step = rolls[-1][0]
 
-            if elapsed_time >= 4:
-                self.random_walk_step() 
-                self.can_walk = True 
-                self.start_time = None            
+        self.sprite.src_image = self.dice_anim.update(frame.dt)
+        self.can_walk = self.dice_anim.is_done 
