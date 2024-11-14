@@ -1,8 +1,23 @@
 
 import pygame
-from lib import Sprite
 
-class AnimationSprite(Sprite):
+class AnimationLoop:
+    """
+    `AnimationLoop` holds a list of images, and allows you to regularly 
+    update to get its current image to be assigned to a sprite's image.
+
+    Methods:
+        `reset` reset the animation to default
+        `update` progress the animation by `dt`, and returns current image
+
+    Attributes:
+        `image_list` a list of pygame surface images
+        `interval_time` how long (in seconds) do each image last
+        `is_looping` whether or not to loop the animation
+        `dt_timer` the timer for the current image
+        `index` index of current image
+        `is_done` boolean whether the animation is over; if `is_looping`, never `True`
+    """
     
     def __init__(self, image_list: list[pygame.Surface], 
             is_looping: bool = True, interval_time: float = 0.15):
@@ -11,8 +26,7 @@ class AnimationSprite(Sprite):
 
         self.image_list = image_list
         self.interval_time = interval_time
-        self.is_looping = is_looping # whether or not to loop the animation
-        self.src_image = self.image_list[0]
+        self.is_looping = is_looping
 
         self.dt_timer: float = 0
         self.index: int = 0
@@ -24,11 +38,10 @@ class AnimationSprite(Sprite):
         self.index = 0
         self.is_done = False
 
-    def update(self, dt):
+    def update(self, dt) -> pygame.Surface:
         # one time animation check (attacking)
-        if self.is_done: return
-
-        self.dt_timer = self.dt_timer + dt
+        if not self.is_done:
+            self.dt_timer = self.dt_timer + dt
 
         if self.dt_timer > self.interval_time:
             self.dt_timer = self.dt_timer % self.interval_time
@@ -38,4 +51,4 @@ class AnimationSprite(Sprite):
             if self.index == 0 and not self.is_looping: 
                 self.is_done = True
 
-        self.src_image = self.image_list[self.index]
+        return self.image_list[self.index]
