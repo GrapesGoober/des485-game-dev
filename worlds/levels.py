@@ -7,6 +7,7 @@ from src.prototype.inventory import InventoryGUI
 from src.prototype.items.test_item import TestItemProp
 from src.prototype.rat import Rat
 from src.prototype.tree import Tree
+from src.prototype.rock import Rock
 
 def create_level_test_1(player: Rat, inventory_gui: InventoryGUI, level_manager: LevelManager):
     return [
@@ -16,6 +17,7 @@ def create_level_test_1(player: Rat, inventory_gui: InventoryGUI, level_manager:
         Shop(player, inventory_gui, (13, 6)),
         TestItemProp(player, inventory_gui, (10, 8)),
         Nut(player, inventory_gui, (10, 11)),
+        Rock(player, (5, 12)),
         Cheese(
             player, 
             callback= lambda: level_manager.transition(
