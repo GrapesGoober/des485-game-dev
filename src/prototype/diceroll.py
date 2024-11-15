@@ -4,22 +4,13 @@ from lib import Frame, GameObject, World, Sprite
 from src.grid_position import GridPosition
 import random
 
-def gen_dice_face() -> pygame.Surface:
-    f = pygame.Surface((50, 50))
-    f.fill((
-        random.randrange(100,255), 
-        random.randrange(100,255), 
-        random.randrange(100,255)
-    ))
-    return f
-
 DICE_FACES = [
-    (1, gen_dice_face()),
-    (2, gen_dice_face()),
-    (3, gen_dice_face()),
-    (4, gen_dice_face()),
-    (5, gen_dice_face()),
-    (6, gen_dice_face()),
+    (1, pygame.image.load("src/images/dice/1.png")),
+    (2, pygame.image.load("src/images/dice/2.png")),
+    (3, pygame.image.load("src/images/dice/3.png")),
+    (4, pygame.image.load("src/images/dice/4.png")),
+    (5, pygame.image.load("src/images/dice/5.png")),
+    (6, pygame.image.load("src/images/dice/6.png")),
 ]
 
 class DiceRoll(GameObject):
