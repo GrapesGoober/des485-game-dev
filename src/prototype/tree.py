@@ -23,6 +23,10 @@ class Tree(GameObject):
         world.sprites.add(self.sprite)
         world.add(self.position)
 
+    def on_remove(self, world: World) -> None:
+        world.sprites.remove(self.sprite)
+        world.remove(self.position)
+
     def on_update(self, world: World, frame: Frame) -> None:
         for n in self.position.get_neighbours(world, manhat_dist=1):
             if n.parent_object == self.player and self.has_cat:
