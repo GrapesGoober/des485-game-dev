@@ -1,9 +1,9 @@
 from lib import World
-from src.prototype.tree import Tree
-from src.prototype.items.test_item import TestItem
+from src.prototype.level_manager import LevelManager
 from src.prototype.inventory import InventoryGUI
 from src.prototype.diceroll import DiceRoll
 from src.prototype.rat import Rat
+from worlds import levels
 
 def load(world: World):
     dice = DiceRoll((50, 50))
@@ -13,9 +13,10 @@ def load(world: World):
     world.add(
         player,
         dice,
-        inventory_gui,
-        Tree(player, (6, 6), False),
-        Tree(player, (7, 7), False),
-        Tree(player, (8, 8), True),
-        TestItem(player, inventory_gui, (10, 10)),
+        inventory_gui
     )
+
+    # start with a test level just for this prototype
+    level_manager = LevelManager(world)
+    level1 = levels.create_level_test_1(player, inventory_gui, level_manager)
+    level_manager.transition(level1)
