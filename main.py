@@ -12,7 +12,8 @@ if __name__ == "__main__":
     pygame.display.set_caption("basic game template")
 
     world = World()
-    with open("worlds\\test_animation.json") as f: world.load_from_file(f)
+    from worlds import test_animation
+    test_animation.load(world)
 
     while True:
         # handle event
