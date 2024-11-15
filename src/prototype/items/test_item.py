@@ -6,7 +6,7 @@ from src.prototype.rat import Rat
 from src.grid_position import GridPosition
 
 SIZE = 20, 20
-COLOR = (255, 255, 255)
+COLOR = (0, 0, 255)
 
 IMAGE = pygame.Surface(SIZE)
 IMAGE.fill(COLOR)
