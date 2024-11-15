@@ -30,6 +30,7 @@ class Rat(GameObject):
         self.position.parent_object = self
         self.diceroll: DiceRoll = dice
         self.current_anim = DOWN_IDLE
+        self.nut_counter: int = 0
 
     def on_create(self, world: World) -> None:
         world.sprites.add(self.sprite)
