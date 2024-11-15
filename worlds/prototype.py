@@ -1,4 +1,5 @@
 from lib import World
+from src.prototype.items.test_item import TestItemShopGUI
 from src.prototype.level_manager import LevelManager
 from src.prototype.inventory import InventoryGUI
 from src.prototype.diceroll import DiceRoll
@@ -11,12 +12,14 @@ def load(world: World):
     player = Rat(dice, (5, 5))
     inventory_gui = InventoryGUI((1180, 100))
     nut_test = Nut(player, inventory_gui, (10, 11))
+    test_item_shop_gui = TestItemShopGUI(player, inventory_gui, (50, 200))
 
     world.add(
         player,
         dice,
         inventory_gui,
-        nut_test
+        nut_test,
+        test_item_shop_gui
     )
 
     # start with a test level just for this prototype

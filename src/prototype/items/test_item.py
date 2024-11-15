@@ -11,6 +11,8 @@ COLOR = (255, 255, 255)
 IMAGE = pygame.Surface(SIZE)
 IMAGE.fill(COLOR)
 
+ITEM_NUT_COST = 1
+
 class BaseTestItem(GameObject):
     def __init__(self) -> None:
         self.sprite = Sprite()
@@ -57,3 +59,27 @@ class TestItemInventoryGUI(BaseTestItem):
             print("hi, using item")
             print(f"i have the player here {self.player} what should I do with it?")
             world.remove(self)
+class TestItemShopGUI(BaseTestItem):
+   
+    def __init__(self, player: Rat, inventory: InventoryGUI, position: tuple[int, int]) -> None:
+        super().__init__()
+        self.player: Rat = player
+        self.sprite.position = position
+        self.inventory = inventory
+
+    def on_update(self, world, frame):
+        for e in frame.events:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
+                in_bounds = (
+                    mouse_x > self.sprite.x - SIZE[0] and 
+                    mouse_x < self.sprite.x + SIZE[0] and 
+                    mouse_y > self.sprite.y - SIZE[1] and 
+                    mouse_y < self.sprite.y + SIZE[1]
+                )
+
+                if in_bounds and self.player.nut_counter >= ITEM_NUT_COST:
+                    self.player.nut_counter -= 1
+                    item_gui = TestItemInventoryGUI(self.player, self.inventory)
+                    world.add(item_gui)
+                    self.inventory.add_item_gui(item_gui)
