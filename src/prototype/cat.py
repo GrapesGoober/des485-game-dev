@@ -44,7 +44,12 @@ class Cat(GameObject):
         # Create animation
         self.current_anim = DOWN_IDLE
 
+        # Duration
+        self.duration = 2000  # 2 seconds in milliseconds
+        self.start_time = None  # Timestamp when the Cat is created
+
     def on_create(self, world: World) -> None:
+        self.start_time = pygame.time.get_ticks() 
         world.sprites.add(self.sprite)
         world.add(self.position)
 
@@ -65,3 +70,8 @@ class Cat(GameObject):
         self.sprite.x = self.position.grid_x * SIZE[0]
         self.sprite.y = self.position.grid_y * SIZE[1]
         self.sprite.src_image = self.current_anim.update(frame.dt)
+
+        current_time = pygame.time.get_ticks()
+        if current_time - self.start_time >= self.duration:
+            world.remove(self)
+

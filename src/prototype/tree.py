@@ -45,11 +45,13 @@ class Tree(GameObject):
                 # Check if the player has a tuna can
                 if self.player.inventory.has_item(TunaCanInventoryGUI):
                     print("Tree: Player has tuna can")
-                    world.add(TunaCanGUI(player=self.player, grid_position=(3, 6)))
+                    world.add(TunaCanGUI(player=self.player, grid_position=(3, 6), cat=cat))
                     
                     # Player move to previous position
                     self.player.position.grid_position = self.player.previous_position
                 else:
+
+                    print("Tree: Player does not have tuna can")
 
                     # Player get eaten
                     self.player.get_eaten(world)

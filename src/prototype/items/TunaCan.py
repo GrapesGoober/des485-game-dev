@@ -2,6 +2,7 @@ import pygame
 from typing import Any
 from lib import Frame, GameObject, World, Sprite
 
+from src.prototype.cat import Cat
 from src.grid_position import GridPosition
 from src.prototype.rat import Rat
 
@@ -71,7 +72,8 @@ class TunaCanInventoryGUI(GameObject):
         # Create sprite
         self.sprite = Sprite()
         self.sprite.src_image = item.sprite.src_image
-        self.sprite.position = item.player.inventory.get_item_gui_position(self)
+
+        self.item = item
 
     def on_create(self, world: World) -> None:
         world.sprites.add(self.sprite)
@@ -80,7 +82,7 @@ class TunaCanInventoryGUI(GameObject):
         world.sprites.remove(self.sprite)
     
     def on_update(self, world: World, frame: Frame):
-        pass
+        self.sprite.position = self.item.player.inventory.get_item_gui_position(self)
 
 class TunaCanGUI(GameObject):
     """
@@ -95,6 +97,7 @@ class TunaCanGUI(GameObject):
         # Set metadata
         self.position = GridPosition(metadata['grid_position'])
         self.player: Rat = metadata['player']
+        self.cat: Cat = metadata['cat']
 
         # Create sprite
         self.sprite = Sprite()
@@ -103,6 +106,8 @@ class TunaCanGUI(GameObject):
         # Set sprite position
         self.sprite.x = metadata['grid_position'][0] * self.size[0]
         self.sprite.y = metadata['grid_position'][1] * self.size[1]
+        
+        self.is_used = False
 
     def on_create(self, world: World) -> None:
         world.sprites.add(self.sprite)
@@ -113,14 +118,40 @@ class TunaCanGUI(GameObject):
         world.remove(self.position)
     
     def on_update(self, world: World, frame: Frame) -> None:
-        
-        if pygame.key.get_pressed()[pygame.K_y]:
-            print("Player: Tuna can used")
 
-            # Remove tuna can from world
-            world.remove(self)
+        # Player cannot walk
+        self.player.diceroll.can_walk = False
 
-        elif pygame.key.get_pressed()[pygame.K_n]:
-            print("Player: Get eaten")
-            self.player.get_eaten(world)
-            world.remove(self)
+        if not self.is_used:
+            pressed_key = pygame.key.get_pressed()
+            if pressed_key[pygame.K_y]:
+                print("Player: Tuna can used")
+
+                # Remove tuna can gui from world
+                world.remove(self)
+
+                # Remove cat from world
+                world.remove(self.cat)
+
+                # Player can walk again
+                self.player.diceroll.can_walk = True
+
+                # Set tuna can as used
+                self.is_used = True
+
+            elif pressed_key[pygame.K_n]:
+                print("Player: Get eaten")
+
+                # Player get eaten
+                self.player.get_eaten(world)
+
+                # Remove tuna can gui from world
+                world.remove(self)
+
+                # Remove cat from world
+                world.remove(self.cat)
+
+                # Player can walk again
+                self.player.diceroll.can_walk = True
+
+                self.is_used = True

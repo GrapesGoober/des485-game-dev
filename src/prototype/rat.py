@@ -79,9 +79,9 @@ class Rat(GameObject):
             world.remove(self)
 
             print("Player: Game Over")
-            pygame.quit()
-            exit()
         else:
+
+            print("Player: Get eaten")
 
             # Reset the rat to the spawn position
             self.position.grid_position = self.spawn_position
