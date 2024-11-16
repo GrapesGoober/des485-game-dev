@@ -23,6 +23,8 @@ class DiceRoll(GameObject):
         self.walk_step = 0
         self.can_walk = True
 
+        self.rolls = []
+
     def on_create(self, world: World) -> None:
         world.sprites.add(self.sprite)
 
@@ -34,12 +36,16 @@ class DiceRoll(GameObject):
         # ran out of moves => start rolling dice
         if self.walk_step == 0: 
             roll_times = 10
-            rolls = [
+
+            self.rolls = [
                 random.choice(DICE_FACES) for _ in range(roll_times)
             ]
             self.dice_anim.reset()
-            self.dice_anim.image_list = [r[1] for r in rolls]
-            self.walk_step = rolls[-1][0]
+            self.dice_anim.image_list = [r[1] for r in self.rolls]
+            self.walk_step = self.rolls[-1][0]
+
+            print("walk_step: ", self.walk_step)
 
         self.sprite.src_image = self.dice_anim.update(frame.dt)
+        self.sprite.src_image = self.rolls[-1][1]
         self.can_walk = self.dice_anim.is_done 

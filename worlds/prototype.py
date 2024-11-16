@@ -9,15 +9,13 @@ from worlds import levels
 
 def load(world: World):
     dice = DiceRoll((50, 50))
-    player = Rat(dice, (5, 5))
     inventory_gui = InventoryGUI((1180, 100))
-    cat = Cat((30, 2))
-
+    player = Rat(dice, (5, 5), inventory_gui)
+    
     world.add(
         player,
         dice,
         inventory_gui,
-        cat
     )
 
     # start with a test level just for this prototype

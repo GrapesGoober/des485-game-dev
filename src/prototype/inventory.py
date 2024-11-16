@@ -10,6 +10,12 @@ class InventoryGUI(GameObject):
 
     def add_item_gui(self, item: GameObject) -> None:
         self.items.append(item)
+
+    def has_item(self, item_type: type) -> bool:
+        for item in self.items:
+            if isinstance(item, item_type):
+                return True
+        return False
     
     def get_item_gui_position(self, item: GameObject) -> tuple[int, int]:
         x = self.position[0]
