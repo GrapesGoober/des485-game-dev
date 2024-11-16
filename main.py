@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
     world = World()
     from worlds import prototype
-    prototype.load(world)
+    prototype.load_gameplay(world)
 
     while True:
         # handle event
