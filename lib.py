@@ -23,6 +23,7 @@ class Sprite(pygame.sprite.Sprite):
 
     Attributes:
         `src_image` The source image to render.
+        `self.layer` The draw ordering of sprite. Lower values are drawn first
         `x`, `y`    Sprite position at center of image.
         `angle`     Sprite angle at center of image (degrees).
         `body`      Pymunk's rigidbody for the sprite to draw to. Default to `None`.
@@ -30,6 +31,7 @@ class Sprite(pygame.sprite.Sprite):
     def __init__(self, body: pymunk.Body = None) -> None:
         super().__init__()
         self.src_image = pygame.Surface((0,0)) 
+        self.layer: int = 0
         self.angle = 0
         self.x, self.y = 0, 0
         self._camera_pos = 0, 0
@@ -98,7 +100,7 @@ class World:
         self.global_states: dict[str|Any] = {}
         self.camera_position = [0, 0]
         self.gameobjects: list[GameObject] = []
-        self.sprites = pygame.sprite.Group()
+        self.sprites = pygame.sprite.LayeredUpdates()
         self.space = pymunk.Space()
         self.background: pygame.Surface = None
 
