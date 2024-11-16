@@ -3,7 +3,6 @@ from typing import Any
 from lib import Frame, GameObject, World, Sprite
 
 from src.prototype.cat import Cat
-from src.grid_position import GridPosition
 from src.prototype.rat import Rat
 
 SIZE = 20, 20
@@ -40,7 +39,7 @@ class TunaCanShopGUI(GameObject):
             if n.parent_object == self.player:
                 world.remove(self)
 
-    def on_update(self, world, frame):
+    def on_update(self, world: 'World', frame: Frame):
         for e in frame.events:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
@@ -82,7 +81,11 @@ class TunaCanInventoryGUI(GameObject):
         world.sprites.remove(self.sprite)
     
     def on_update(self, world: World, frame: Frame):
-        self.sprite.position = self.item.player.inventory.get_item_gui_position(self)
+        if self.item.player.inventory.has_item(TunaCanInventoryGUI):
+            self.sprite.position = self.item.player.inventory.get_item_gui_position(self)
+        else:
+            # Remove item gui from world
+            world.remove(self)
 
 class TunaCanGUI(GameObject):
     """
@@ -91,32 +94,39 @@ class TunaCanGUI(GameObject):
 
     def __init__(self, **metadata: Any) -> None:
 
-        # size
-        self.size = 144, 48
+        super().__init__()
         
         # Set metadata
-        self.position = GridPosition(metadata['grid_position'])
         self.player: Rat = metadata['player']
         self.cat: Cat = metadata['cat']
 
         # Create sprite
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.image.load("src/images/items/tuna_can_prompt.png")
+        self.sprite.src_image = pygame.Surface((400, 100))
+        self.sprite.src_image.fill((255, 255, 255))
 
-        # Set sprite position
-        self.sprite.x = metadata['grid_position'][0] * self.size[0]
-        self.sprite.y = metadata['grid_position'][1] * self.size[1]
+        font = pygame.font.Font("src/fonts/Pixuf.ttf", 24)
+        text_surface = font.render("Do you want to use the tuna can?", True, (0, 0, 0))  # Text color is black for visibility
+        self.sprite.src_image.blit(text_surface, (10, 10))
+
+        text_surface = font.render("[Y] Yes", True, (0, 0, 0))
+        self.sprite.src_image.blit(text_surface, (10, 50))
+
+        text_surface = font.render("[N] No", True, (0, 0, 0))
+        self.sprite.src_image.blit(text_surface, (100, 50))
+
+        # Set sprite position: middle-bottom of the scene
+        sprite_width, sprite_height = self.sprite.src_image.get_size()
+        self.sprite.position = ((1280 - sprite_width) // 2, 720 - sprite_height - 20)
         
         self.is_used = False
 
     def on_create(self, world: World) -> None:
         world.sprites.add(self.sprite)
-        world.add(self.position)
 
     def on_remove(self, world):
         world.sprites.remove(self.sprite)
-        world.remove(self.position)
-    
+
     def on_update(self, world: World, frame: Frame) -> None:
 
         # Player cannot walk
@@ -132,6 +142,11 @@ class TunaCanGUI(GameObject):
 
                 # Remove cat from world
                 world.remove(self.cat)
+
+                # Remove item gui from inventory
+                for item in self.player.inventory.items:
+                    if isinstance(item, TunaCanInventoryGUI):
+                        self.player.inventory.items.remove(item)
 
                 # Player can walk again
                 self.player.diceroll.can_walk = True
