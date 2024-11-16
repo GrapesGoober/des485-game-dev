@@ -19,12 +19,10 @@ class Shop(GameObject):
         self.sprite.y = grid_position[1] * SIZE[1]
         self.position = GridPosition(grid_position)
         self.player: Rat = player
-
-        self.gui_subworld = World()
-        self.gui_subworld.add(
+        self.items: list[GameObject] = [
             # add items here
             TestItemShopGUI(player, inventory, (50, 200))
-        )
+        ]
 
     def on_create(self, world: World) -> None:
         world.sprites.add(self.sprite)
@@ -35,7 +33,7 @@ class Shop(GameObject):
         world.remove(self.position)
     
     def on_update(self, world: World, frame: Frame) -> None:
+        world.remove(*self.items)
         for n in self.position.get_neighbours(world, manhat_dist=1):
             if n.parent_object == self.player: 
-                self.gui_subworld.update(frame.events, frame.dt)
-                self.gui_subworld.draw(pygame.display.get_surface())
+                world.add(*self.items)
