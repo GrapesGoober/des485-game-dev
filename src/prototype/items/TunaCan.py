@@ -3,7 +3,7 @@ from typing import Any
 from lib import Frame, GameObject, World, Sprite
 
 from src.prototype.cat import Cat
-from src.prototype.rat import Rat
+from src.prototype.rat import Rat, RatStates
 
 SIZE = 48, 48
 ITEM_NUT_COST = 1
@@ -33,11 +33,6 @@ class TunaCanShopGUI(GameObject):
 
     def on_remove(self, world: 'World'):
         world.sprites.remove(self.sprite)
-
-    def on_update(self, world: 'World', frame: Frame):
-        for n in self.position.get_neighbours(world):
-            if n.parent_object == self.player:
-                world.remove(self)
 
     def on_update(self, world: 'World', frame: Frame):
         for e in frame.events:
@@ -119,8 +114,6 @@ class TunaCanGUI(GameObject):
         sprite_width, sprite_height = self.sprite.src_image.get_size()
         self.sprite.position = ((1280 - sprite_width) // 2, 720 - sprite_height - 20)
         
-        self.is_used = False
-
     def on_create(self, world: World) -> None:
         world.sprites.add(self.sprite)
 
@@ -132,41 +125,41 @@ class TunaCanGUI(GameObject):
         # Player cannot walk
         self.player.diceroll.can_walk = False
 
-        if not self.is_used:
-            pressed_key = pygame.key.get_pressed()
-            if pressed_key[pygame.K_y]:
-                print("Player: Tuna can used")
+        pressed_key = pygame.key.get_pressed()
+        if pressed_key[pygame.K_y]:
+            print("Player: Tuna can used")
 
-                # Remove tuna can gui from world
-                world.remove(self)
+            # Remove tuna can gui from world
+            world.remove(self)
 
-                # Remove cat from world
-                world.remove(self.cat)
+            # Remove tuna can from inventory
+            for item in self.player.inventory.items:
+                if isinstance(item, TunaCanInventoryGUI):
+                    self.player.inventory.remove_item_gui(item)
+                    world.remove(item)
 
-                # Remove item gui from inventory
-                for item in self.player.inventory.items:
-                    if isinstance(item, TunaCanInventoryGUI):
-                        self.player.inventory.items.remove(item)
+            # Remove cat from world
+            world.remove(self.cat)
 
-                # Player can walk again
-                self.player.diceroll.can_walk = True
+            # Remove item gui from inventory
+            for item in self.player.inventory.items:
+                if isinstance(item, TunaCanInventoryGUI):
+                    self.player.inventory.items.remove(item)
 
-                # Set tuna can as used
-                self.is_used = True
+            # Player can walk again
+            self.player.current_state == RatStates.WALK_END
 
-            elif pressed_key[pygame.K_n]:
-                print("Player: Get eaten")
+            # Player move to previous position
+            self.player.position.grid_position = self.player.previous_position
 
-                # Player get eaten
-                self.player.get_eaten(world)
+        elif pressed_key[pygame.K_n]:
+            print("Player: Get eaten")
 
-                # Remove tuna can gui from world
-                world.remove(self)
+            # Player get eaten
+            self.player.get_eaten(world)
 
-                # Remove cat from world
-                world.remove(self.cat)
+            # Remove tuna can gui from world
+            world.remove(self)
 
-                # Player can walk again
-                self.player.diceroll.can_walk = True
-
-                self.is_used = True
+            # Remove cat from world
+            world.remove(self.cat)

@@ -91,6 +91,8 @@ class Rat(GameObject):
             print("Player: Get eaten")
             self.position.grid_position = self.spawn_position
             self.diceroll.walk_step = 0
+            self.diceroll.roll_dice()
+            self.current_state = RatStates.DICEROLL
 
     def on_update(self, world: World, frame: Frame) -> None:
         
@@ -99,6 +101,8 @@ class Rat(GameObject):
                 if self.diceroll.can_walk:
                     self.current_state = RatStates.USE_ITEM
             case RatStates.USE_ITEM:
+                # TODO: how can the USE_ITEM state be implemented with items logic?
+                # needs to have prompt to ask for item use, which allows item to be used
                 self.current_state = RatStates.WALK
             case RatStates.WALK:
                 for event in frame.events:
