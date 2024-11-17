@@ -38,7 +38,7 @@ def load_gameplay(world: World):
         player,
         dice,
         inventory_gui,
-        Cat(player=player, grid_position=(30, 2)),
+        Cat(callback= lambda: load_end_screen(world), player=player, grid_position=(4, 6)),
         Tree(player, (6, 6), False),
         Tree(player, (7, 7), False),
         Tree(player, (8, 8), True),

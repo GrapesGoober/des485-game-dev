@@ -8,7 +8,7 @@ from src.prototype.rat import Rat, RatStates
 from src.grid_position import GridPosition
 
 SIZE = 48, 48
-COLOR = (255, 255, 255)
+COLOR = (0, 255, 255)
 
 class Tree(GameObject):
     def __init__(self, player: Rat, grid_position: tuple[int, int], has_cat: bool) -> None:

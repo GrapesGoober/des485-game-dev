@@ -7,6 +7,8 @@ import random
 from src.prototype.diceroll import DiceRoll
 from src.get_sprites_list import get_sprites_list
 from src.animation_loop import AnimationLoop
+from typing import Callable
+from src.prototype.rat import Rat 
 
 SIZE = 48, 48
 COLOR = (255, 255, 255)
@@ -29,12 +31,13 @@ LEFT_IDLE = AnimationLoop([SPRITES[15]])
 
 
 class Cat(GameObject):
-    def __init__(self, **metadata: Any) -> None:
+    def __init__(self, callback: Callable, **metadata: Any) -> None:
 
         # Set metadata
         self.player: Rat = metadata['player']
         self.position = GridPosition(metadata['grid_position'])
         self.position.parent_object = self
+        self.callback: Callable = callback
 
         # Create sprite
         self.sprite = Sprite()
@@ -69,7 +72,13 @@ class Cat(GameObject):
         self.sprite.y = self.position.grid_y * SIZE[1]
         self.sprite.src_image = self.current_anim.update(frame.dt)
 
-        current_time = pygame.time.get_ticks()
-        if current_time - self.start_time >= self.duration:
-            world.remove(self)
+        # current_time = pygame.time.get_ticks()
+        # if current_time - self.start_time >= self.duration:
+        #     world.remove(self)
+
+        for n in self.position.get_neighbours(world, manhat_dist=1):
+            if n.parent_object == self.player:
+                print("rat near cat")
+                self.callback()
+
 

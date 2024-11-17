@@ -18,7 +18,7 @@ if __name__ == "__main__":
     while True:
         # handle event
         events = pygame.event.get()
-        for event in events:
+        for event in events: 
             if event.type == pygame.QUIT: pygame.quit(), exit()
         dt = clock.tick(FPS)/1000
         pygame.display.set_caption(f"basic game template, FPS = {int(1/dt)}")
