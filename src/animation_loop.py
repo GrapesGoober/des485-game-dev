@@ -49,6 +49,7 @@ class AnimationLoop:
             self.index = self.index % len(self.image_list)
             
             if self.index == 0 and not self.is_looping: 
+                self.index = len(self.image_list) - 1
                 self.is_done = True
 
         return self.image_list[self.index]
