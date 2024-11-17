@@ -1,6 +1,6 @@
 from lib import World
 from src.prototype.items.cheese import Cheese
-from src.prototype.nut import Nut
+from src.prototype.items.Nut import Nut
 from src.prototype.rock import Rock
 from src.prototype.shop import Shop
 from src.prototype.tree import Tree
@@ -32,20 +32,19 @@ def load_gameplay(world: World):
 
     # some objects are needed as dependency
     dice = DiceRoll((50, 50))
-    player = Rat(dice, (5, 5))
     inventory_gui = InventoryGUI((1180, 100))
-
+    player = Rat(dice=dice, grid_position=(10, 10), inventory=inventory_gui)
     world.add(
         player,
         dice,
         inventory_gui,
-        Cat((30, 2)),
+        Cat(player=player, grid_position=(30, 2)),
         Tree(player, (6, 6), False),
         Tree(player, (7, 7), False),
         Tree(player, (8, 8), True),
-        Shop(player, inventory_gui, (13, 6)),
+        Shop(player=player, grid_position=(10, 20)),
         TestItemProp(player, inventory_gui, (10, 8)),
-        Nut(player, inventory_gui, (10, 11)),
+        Nut(player=player, grid_position=(10, 19)),
         Rock(player, (5, 12)),
         Cheese(
             player, 
