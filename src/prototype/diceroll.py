@@ -1,25 +1,15 @@
 import pygame
 from src.animation_loop import AnimationLoop
 from lib import Frame, GameObject, World, Sprite
-from src.grid_position import GridPosition
 import random
 
-def gen_dice_face() -> pygame.Surface:
-    f = pygame.Surface((50, 50))
-    f.fill((
-        random.randrange(100,255), 
-        random.randrange(100,255), 
-        random.randrange(100,255)
-    ))
-    return f
-
 DICE_FACES = [
-    (1, gen_dice_face()),
-    (2, gen_dice_face()),
-    (3, gen_dice_face()),
-    (4, gen_dice_face()),
-    (5, gen_dice_face()),
-    (6, gen_dice_face()),
+    (1, pygame.image.load("src/images/dice/1.png")),
+    (2, pygame.image.load("src/images/dice/2.png")),
+    (3, pygame.image.load("src/images/dice/3.png")),
+    (4, pygame.image.load("src/images/dice/4.png")),
+    (5, pygame.image.load("src/images/dice/5.png")),
+    (6, pygame.image.load("src/images/dice/6.png")),
 ]
 
 class DiceRoll(GameObject):
@@ -38,17 +28,15 @@ class DiceRoll(GameObject):
     def on_remove(self, world: World) -> None:
         world.sprites.remove(self.sprite)
 
+    def roll_dice(self) -> None:
+        roll_times = 10
+        rolls = [
+            random.choice(DICE_FACES) for _ in range(roll_times)
+        ]
+        self.dice_anim.reset()
+        self.dice_anim.image_list = [r[1] for r in rolls]
+        self.walk_step = rolls[-1][0]
+
     def on_update(self, world: World, frame: Frame) -> None:
-
-        # ran out of moves => start rolling dice
-        if self.walk_step == 0: 
-            roll_times = 10
-            rolls = [
-                random.choice(DICE_FACES) for _ in range(roll_times)
-            ]
-            self.dice_anim.reset()
-            self.dice_anim.image_list = [r[1] for r in rolls]
-            self.walk_step = rolls[-1][0]
-
         self.sprite.src_image = self.dice_anim.update(frame.dt)
         self.can_walk = self.dice_anim.is_done 
