@@ -33,9 +33,38 @@ def load_gameplay(world: World):
     # some objects are needed as dependency
     dice = DiceRoll((50, 50))
     inventory_gui = InventoryGUI((1180, 100))
-    player = Rat(dice=dice, grid_position=(10, 10), inventory=inventory_gui)
+    player = Rat(dice=dice, grid_position=(1, 1), inventory=inventory_gui)
+    player2 = Rat(dice=dice, grid_position=(1, 2), inventory=inventory_gui)
+    player3 = Rat(dice=dice, grid_position=(1, 3), inventory=inventory_gui)
+    player4 = Rat(dice=dice, grid_position=(1, 4), inventory=inventory_gui)
+    player5 = Rat(dice=dice, grid_position=(1, 5), inventory=inventory_gui)
     world.add(
         player,
+        Rat(dice=dice, grid_position=(1, 2), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(1, 3), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(1, 4), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(1, 5), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(1, 6), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(1, 7), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(1, 8), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(1, 9), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(1, 10), inventory=inventory_gui),
+
+        Rat(dice=dice, grid_position=(2, 1), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(3, 1), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(4, 1), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(5, 1), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(6, 1), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(7, 1), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(8, 1), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(9, 1), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(10, 1), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(11, 1), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(12, 1), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(13, 1), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(14, 1), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(15, 1), inventory=inventory_gui),
+        Rat(dice=dice, grid_position=(26, 1), inventory=inventory_gui),
         dice,
         inventory_gui,
         Cat(callback= lambda: load_end_screen(world), player=player, grid_position=(4, 6)),
