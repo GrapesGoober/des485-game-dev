@@ -11,6 +11,9 @@ class InventoryGUI(GameObject):
     def add_item_gui(self, item: GameObject) -> None:
         self.items.append(item)
 
+    def remove_item_gui(self, item: GameObject) -> None:
+        self.items.remove(item)
+
     def has_item(self, item_type: type) -> bool:
         for item in self.items:
             if isinstance(item, item_type):
