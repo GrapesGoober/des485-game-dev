@@ -6,7 +6,7 @@ from src.prototype.cat import Cat
 from src.prototype.rat import Rat
 
 SIZE = 20, 20
-ITEM_NUT_COST = 7
+ITEM_NUT_COST = 1
 
 class TunaCanShopGUI(GameObject):
     """
