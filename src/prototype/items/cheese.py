@@ -13,7 +13,7 @@ IMAGE.fill(COLOR)
 class Cheese(GameObject):
     def __init__(self, player: Rat, callback: Callable, grid_position: tuple[int, int]) -> None:
         self.sprite = Sprite()
-        self.sprite.src_image = IMAGE
+        self.sprite.src_image = pygame.image.load("src/images/items/cheese.png")
         self.sprite.x = grid_position[0] * SIZE[0]
         self.sprite.y = grid_position[1] * SIZE[1]
         self.position = GridPosition(grid_position)

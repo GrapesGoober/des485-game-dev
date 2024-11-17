@@ -1,4 +1,5 @@
 from lib import World
+from src.prototype.GrassField import GrassField
 from src.prototype.items.cheese import Cheese
 from src.prototype.items.Nut import Nut
 from src.prototype.rock import Rock
@@ -20,6 +21,7 @@ def load_gameplay(world: World):
     inventory_gui = InventoryGUI((1180, 100))
     player = Rat(dice=dice, grid_position=(10, 10), inventory=inventory_gui)
     world.add(
+        GrassField(grid_position=(13, 8)),
         player,
         dice,
         inventory_gui,
