@@ -45,3 +45,7 @@ class RatHole(GameObject):
 
                 # Remove the rat hole from the world
                 world.remove(self)
+    
+    def on_remove(self, world: 'World'):
+        world.sprites.remove(self.sprite)
+    

@@ -7,10 +7,9 @@ from src.get_sprites_list import get_sprites_list
 from typing import Callable
 
 
-FONT_SIZE = 70  # Large font size
-TEXT = "Press enter to start"  # Text to display
-TEXT_COLOR = (255, 255, 255)  # White color
-BACKGROUND_COLOR = (200, 200, 50)  # Black background
+FONT_SIZE = 60 
+TEXT = "Press enter to start"  
+TEXT_COLOR = (50, 50, 50) 
 SIZE = 1280, 720
 
 class TextStart(GameObject):
@@ -34,7 +33,7 @@ class TextStart(GameObject):
         screen = (pygame.display.get_surface())
         font = pygame.font.Font(None, FONT_SIZE)
         text_surface = font.render(TEXT, True, TEXT_COLOR)
-        text_rect = text_surface.get_rect(center=(SIZE[0] // 2, SIZE[1] // 2 + 50))
+        text_rect = text_surface.get_rect(center=(SIZE[0] // 2, SIZE[1] // 2 + 30))
         screen.blit(text_surface, text_rect)    
 
         for event in frame.events:

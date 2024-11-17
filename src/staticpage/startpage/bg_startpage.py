@@ -13,7 +13,7 @@ class BackgroundStartPage(GameObject):
         self.sprite = Sprite()
         self.sprite.src_image = pygame.Surface(SIZE)
         self.sprite.src_image = pygame.transform.scale(
-            pygame.image.load('src/images/cheese_background.jpg'),
+            pygame.image.load('src\images\startpage_background.png'),
             (1280, 720) 
         )
 

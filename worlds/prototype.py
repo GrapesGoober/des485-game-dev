@@ -19,16 +19,19 @@ from src.prototype.items.Nut import Nut
 from src.staticpage.startpage.bg_startpage import BackgroundStartPage
 from src.staticpage.startpage.textbox_cheesehunter import TextCheeseHunter
 from src.staticpage.startpage.textbox_start import TextStart
+from src.staticpage.startpage.rat_startpage import RatStartPage
 from src.staticpage.gameoverpage.bg_gameoverpage import BackgroundGameOverPage
 from src.staticpage.gameoverpage.textbox_gameover import TextGameOver
 from src.staticpage.gameoverpage.textbox_restart import TextRestart
+from src.staticpage.gameoverpage.rat_missioncompleted import RatMissionCompleted
+from src.staticpage.gameoverpage.cheese_missioncompleted import CheeseMissionCompleted
 
 def load_start_screen(world: World):
 
     world.add(
         BackgroundStartPage(),
-        TextCheeseHunter(),
-        TextStart(callback= lambda: load_gameplay(world))
+        TextStart(callback= lambda: load_gameplay(world)),
+        RatStartPage((13.5, 10))
     )   
 
 
@@ -96,6 +99,7 @@ def load_gameplay(world: World):
     stars = [Star(player=player, grid_position=position) for position in star_positions]
 
     cheese = Cheese(player, callback= lambda: load_end_screen(world), grid_position= (20, 12))
+    cheese2 = Cheese(player, callback= lambda: load_end_screen(world), grid_position= (8, 3))
 
     rathole_positions = [(7, 12), (11, 3), (16, 3)]
     ratholes = [RatHole(player=player, grid_position=position) for position in rathole_positions]
@@ -117,7 +121,8 @@ def load_gameplay(world: World):
         cheese,
         *ratholes,
         *nuts,
-        shop
+        shop, 
+        cheese2
     )
 
 def load_end_screen(world: World):
@@ -125,7 +130,9 @@ def load_end_screen(world: World):
     world.remove(*world.gameobjects)
     # add whatever gameobject you need here
     world.add(
-        BackgroundStartPage(),
-        TextGameOver(),
-        TextRestart(callback= lambda: load_gameplay(world))
+        BackgroundGameOverPage(),
+        RatMissionCompleted((15, 8)),
+        CheeseMissionCompleted((12, 8))
+        # TextGameOver(),
+        # TextRestart(callback= lambda: load_gameplay(world))
     )   

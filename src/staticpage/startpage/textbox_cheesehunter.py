@@ -8,7 +8,7 @@ from src.get_sprites_list import get_sprites_list
 
 FONT_SIZE = 100  
 TEXT = "Cheese Hunter"  
-TEXT_COLOR = (255, 255, 255)  
+TEXT_COLOR = (50, 50, 50)  
 SIZE = 1280, 720
 
 class TextCheeseHunter(GameObject):
