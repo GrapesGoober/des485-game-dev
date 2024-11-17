@@ -12,8 +12,8 @@ if __name__ == "__main__":
     pygame.display.set_caption("basic game template")
 
     world = World()
-    from worlds import test_animation
-    test_animation.load(world)
+    from worlds import prototype
+    prototype.load_gameplay(world)
 
     while True:
         # handle event

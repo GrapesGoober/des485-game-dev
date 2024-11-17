@@ -18,18 +18,15 @@ class Shop(GameObject):
 
         # Create sprite 
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.image.load("src/images/items/shop.png")
-
-        # Set sprite position
-        self.sprite.x = metadata['grid_position'][0] * SIZE[0]
-        self.sprite.y = metadata['grid_position'][1] * SIZE[1]
-
-        self.gui_subworld = World()
-        self.gui_subworld.add(
+        self.sprite.src_image = IMAGE
+        self.sprite.x = grid_position[0] * SIZE[0]
+        self.sprite.y = grid_position[1] * SIZE[1]
+        self.position = GridPosition(grid_position)
+        self.player: Rat = player
+        self.items: list[GameObject] = [
             # add items here
-            TunaCanShopGUI(player=self.player, position=(50, 200)),
-            HammerShopGUI(player=self.player, position=(80, 200))
-        )
+            TestItemShopGUI(player, inventory, (50, 200))
+        ]
 
     def on_create(self, world: World) -> None:
         world.sprites.add(self.sprite)
@@ -40,5 +37,7 @@ class Shop(GameObject):
         world.remove(self.position)
     
     def on_update(self, world: World, frame: Frame) -> None:
-        self.gui_subworld.update(frame.events, frame.dt)
-        self.gui_subworld.draw(pygame.display.get_surface())
+        world.remove(*self.items)
+        for n in self.position.get_neighbours(world, manhat_dist=1):
+            if n.parent_object == self.player: 
+                world.add(*self.items)
