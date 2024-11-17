@@ -38,8 +38,6 @@ class Cat(GameObject):
 
         # Create sprite
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.Surface(SIZE)
-        self.sprite.src_image.fill(COLOR)
 
         # Create animation
         self.current_anim = DOWN_IDLE
