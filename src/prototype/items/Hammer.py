@@ -2,12 +2,14 @@ import pygame
 from typing import Any
 from lib import Frame, GameObject, World, Sprite
 
+from src.prototype.cat import Cat
 from src.grid_position import GridPosition
 from src.prototype.tree import Tree
 from src.prototype.rat import Rat
 
 SIZE = 20, 20
 ITEM_NUT_COST = 1
+
 
 class HammerShopGUI(GameObject):
     """
@@ -25,7 +27,8 @@ class HammerShopGUI(GameObject):
 
         # Create sprite
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.image.load("src/images/items/hammer.png")
+        self.sprite.src_image = pygame.image.load(
+            "src/images/items/hammer.png")
         self.sprite.position = metadata['position']
 
     def on_create(self, world: 'World'):
@@ -44,9 +47,9 @@ class HammerShopGUI(GameObject):
             mouse_x, mouse_y = pygame.mouse.get_pos()
             if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
                 in_bounds = (
-                    mouse_x > self.sprite.x - SIZE[0] and 
-                    mouse_x < self.sprite.x + SIZE[0] and 
-                    mouse_y > self.sprite.y - SIZE[1] and 
+                    mouse_x > self.sprite.x - SIZE[0] and
+                    mouse_x < self.sprite.x + SIZE[0] and
+                    mouse_y > self.sprite.y - SIZE[1] and
                     mouse_y < self.sprite.y + SIZE[1]
                 )
 
@@ -60,11 +63,12 @@ class HammerShopGUI(GameObject):
                     world.add(item_gui)
                     self.player.inventory.add_item_gui(item_gui)
 
+
 class HammerInventoryGUI(GameObject):
     """
     A HammerInventoryGUI for displaying the hammer in the inventory.
     """
-    
+
     def __init__(self, item: HammerShopGUI) -> None:
         super().__init__()
 
@@ -92,17 +96,20 @@ class HammerInventoryGUI(GameObject):
     def on_update(self, world: 'World', frame: Frame):
         # Update position
         if not self.is_dragging:
-            self.sprite.position = self.item.player.inventory.get_item_gui_position(self)
+            self.sprite.position = self.item.player.inventory.get_item_gui_position(
+                self)
 
         for e in frame.events:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            if e.type == pygame.MOUSEBUTTONDOWN:
-                in_bounds = (
-                    mouse_x > self.sprite.x - SIZE[0] and 
-                    mouse_x < self.sprite.x + SIZE[0] and 
-                    mouse_y > self.sprite.y - SIZE[1] and 
-                    mouse_y < self.sprite.y + SIZE[1]
-                )
+
+            in_bounds = (
+                mouse_x > self.sprite.x - SIZE[0] and
+                mouse_x < self.sprite.x + SIZE[0] and
+                mouse_y > self.sprite.y - SIZE[1] and
+                mouse_y < self.sprite.y + SIZE[1]
+            )
+
+            if e.type == pygame.MOUSEBUTTONDOWN and in_bounds:
 
                 if in_bounds:
                     self.is_dragging = True
@@ -116,9 +123,22 @@ class HammerInventoryGUI(GameObject):
             elif e.type == pygame.MOUSEBUTTONUP:
 
                 self.is_dragging = False
-                self.position.grid_position = (mouse_x // SIZE[0], mouse_y // SIZE[1])
+                self.position.grid_position = (
+                    mouse_x // SIZE[0], mouse_y // SIZE[1])
 
                 # Cannot check if this grid is tree, get_neighbours returns empty
                 for n in self.position.get_neighbours(world, manhat_dist=1):
                     if isinstance(n.parent_object, Tree):
-                        print("Hammer: Tree found")
+
+                        tree = n.parent_object
+                        if tree.has_cat:
+
+                            # Display cat for 2 seconds
+                            world.add(
+                                Cat(player=tree.player, grid_position=tree.position.grid_position))
+
+                            # Remove cat from tree
+                            tree.has_cat = False
+
+                        # Remove Hammer gui from world
+                        world.remove(self)
