@@ -7,7 +7,7 @@ from src.grid_position import GridPosition
 from src.prototype.tree import Tree
 from src.prototype.rat import Rat
 
-SIZE = 20, 20
+SIZE = 48, 48
 ITEM_NUT_COST = 1
 
 
@@ -56,7 +56,7 @@ class HammerShopGUI(GameObject):
                 if in_bounds and self.player.nut_counter >= ITEM_NUT_COST:
 
                     # Remove nut from player
-                    self.player.nut_counter -= 1
+                    self.player.nut_counter -= ITEM_NUT_COST
 
                     # Add item to inventory
                     item_gui = HammerInventoryGUI(self)
@@ -78,20 +78,14 @@ class HammerInventoryGUI(GameObject):
         self.sprite = Sprite()
         self.sprite.src_image = item.sprite.src_image
 
-        # Placeholder for grid position
-        self.position = GridPosition(grid_position=(0, 0))
-        self.position.parent_object = self
-
         # Dragging state
         self.is_dragging = False
 
     def on_create(self, world: World) -> None:
         world.sprites.add(self.sprite)
-        world.add(self.position)
 
     def on_remove(self, world):
         world.sprites.remove(self.sprite)
-        world.remove(self.position)
 
     def on_update(self, world: 'World', frame: Frame):
         # Update position
@@ -123,11 +117,9 @@ class HammerInventoryGUI(GameObject):
             elif e.type == pygame.MOUSEBUTTONUP:
 
                 self.is_dragging = False
-                self.position.grid_position = (
-                    mouse_x // SIZE[0], mouse_y // SIZE[1])
+                mouse_grid_position = (mouse_x // SIZE[0], mouse_y // SIZE[1])
 
-                # Cannot check if this grid is tree, get_neighbours returns empty
-                for n in self.position.get_neighbours(world, manhat_dist=1):
+                for n in GridPosition.get_objects_at(world, mouse_grid_position, manhat_dist=1):
                     if isinstance(n.parent_object, Tree):
 
                         tree = n.parent_object

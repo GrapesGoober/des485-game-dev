@@ -5,7 +5,7 @@ from lib import Frame, GameObject, World, Sprite
 from src.prototype.cat import Cat
 from src.prototype.rat import Rat
 
-SIZE = 20, 20
+SIZE = 48, 48
 ITEM_NUT_COST = 1
 
 class TunaCanShopGUI(GameObject):
@@ -53,7 +53,7 @@ class TunaCanShopGUI(GameObject):
                 if in_bounds and self.player.nut_counter >= ITEM_NUT_COST:
 
                     # Remove nut from player
-                    self.player.nut_counter -= 1
+                    self.player.nut_counter -= ITEM_NUT_COST
 
                     # Add item to inventory
                     item_gui = TunaCanInventoryGUI(self)

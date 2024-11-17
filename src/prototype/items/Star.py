@@ -5,7 +5,7 @@ from src.grid_position import GridPosition
 from lib import Frame, GameObject, World, Sprite
 from src.prototype.rat import Rat
 
-SIZE = 20, 20
+SIZE = 48, 48
 
 class Star(GameObject):
     """
