@@ -6,7 +6,7 @@ from src.prototype.cat import Cat
 from src.prototype.rat import Rat
 
 SIZE = 20, 20
-ITEM_NUT_COST = 1
+ITEM_NUT_COST = 7
 
 class TunaCanShopGUI(GameObject):
     """
@@ -53,7 +53,7 @@ class TunaCanShopGUI(GameObject):
                 if in_bounds and self.player.nut_counter >= ITEM_NUT_COST:
 
                     # Remove nut from player
-                    self.player.nut_counter -= 1
+                    self.player.nut_counter -= ITEM_NUT_COST
 
                     # Add item to inventory
                     item_gui = TunaCanInventoryGUI(self)

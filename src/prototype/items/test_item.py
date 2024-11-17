@@ -79,7 +79,7 @@ class TestItemShopGUI(BaseTestItem):
                 )
 
                 if in_bounds and self.player.nut_counter >= ITEM_NUT_COST:
-                    self.player.nut_counter -= 1
+                    self.player.nut_counter -= ITEM_NUT_COST
                     item_gui = TestItemInventoryGUI(self.player, self.inventory)
                     world.add(item_gui)
                     self.inventory.add_item_gui(item_gui)

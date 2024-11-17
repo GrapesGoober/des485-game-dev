@@ -8,7 +8,7 @@ from src.prototype.tree import Tree
 from src.prototype.rat import Rat
 
 SIZE = 20, 20
-ITEM_NUT_COST = 1
+ITEM_NUT_COST = 7
 
 
 class HammerShopGUI(GameObject):
@@ -56,7 +56,7 @@ class HammerShopGUI(GameObject):
                 if in_bounds and self.player.nut_counter >= ITEM_NUT_COST:
 
                     # Remove nut from player
-                    self.player.nut_counter -= 1
+                    self.player.nut_counter -= ITEM_NUT_COST
 
                     # Add item to inventory
                     item_gui = HammerInventoryGUI(self)
