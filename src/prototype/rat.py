@@ -91,6 +91,8 @@ class Rat(GameObject):
             print("Player: Get eaten")
             self.position.grid_position = self.spawn_position
             self.diceroll.walk_step = 0
+            self.diceroll.roll_dice()
+            self.current_state = RatStates.DICEROLL
 
     def on_update(self, world: World, frame: Frame) -> None:
         

@@ -151,6 +151,9 @@ class TunaCanGUI(GameObject):
                 # Player can walk again
                 self.player.diceroll.can_walk = True
 
+                # Player move to previous position
+                self.player.position.grid_position = self.player.previous_position
+
                 # Set tuna can as used
                 self.is_used = True
 
