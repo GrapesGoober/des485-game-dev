@@ -5,7 +5,7 @@ from lib import Frame, GameObject, World, Sprite
 from src.prototype.cat import Cat
 from src.prototype.rat import Rat
 
-SIZE = 20, 20
+SIZE = 48, 48
 ITEM_NUT_COST = 1
 
 class TunaCanShopGUI(GameObject):

@@ -7,7 +7,7 @@ from src.grid_position import GridPosition
 from src.prototype.tree import Tree
 from src.prototype.rat import Rat
 
-SIZE = 20, 20
+SIZE = 48, 48
 ITEM_NUT_COST = 1
 
 

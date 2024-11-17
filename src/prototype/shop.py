@@ -7,7 +7,7 @@ from src.prototype.items.Hammer import HammerShopGUI
 from src.prototype.rat import Rat
 from src.grid_position import GridPosition
 
-SIZE = 20, 20
+SIZE = 48, 48
 
 class Shop(GameObject):
     def __init__(self, **metadata: Any) -> None:
@@ -24,7 +24,7 @@ class Shop(GameObject):
         self.items: list[GameObject] = [
             # add items here
             TunaCanShopGUI(player=self.player, position=(50, 200)),
-            HammerShopGUI(player=self.player, position=(80, 200)),
+            HammerShopGUI(player=self.player, position=(50, 300)),
         ]
 
     def on_create(self, world: World) -> None:

@@ -27,14 +27,13 @@ def load_gameplay(world: World):
         Tree(player, (6, 6), False),
         Tree(player, (7, 7), False),
         Tree(player, (8, 8), True),
-        Shop(player=player, grid_position=(10, 20)),
-        TestItemProp(player, inventory_gui, (10, 8)),
-        Nut(player=player, grid_position=(10, 19)),
-        Rock(player, (5, 12)),
+        Shop(player=player, grid_position=(11, 6)),
+        Nut(player=player, grid_position=(11, 7)),
+        Rock(player, (11, 8)),
         Cheese(
             player, 
             callback= lambda: load_end_screen(world), 
-            grid_position=(20, 20)
+            grid_position=(13, 6)
         ),
     )
 

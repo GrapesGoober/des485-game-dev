@@ -6,7 +6,7 @@ from src.grid_position import GridPosition
 from src.prototype.inventory import InventoryGUI
 from src.prototype.rat import Rat
 
-SIZE = 20, 20
+SIZE = 48, 48
 
 class Rainbow(GameObject):
     """

@@ -7,7 +7,7 @@ from src.prototype.cat import Cat
 from src.prototype.rat import Rat
 from src.grid_position import GridPosition
 
-SIZE = 20, 20
+SIZE = 48, 48
 COLOR = (255, 255, 255)
 
 class Tree(GameObject):

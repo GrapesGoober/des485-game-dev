@@ -8,7 +8,7 @@ from src.prototype.diceroll import DiceRoll
 from src.get_sprites_list import get_sprites_list
 from src.animation_loop import AnimationLoop
 
-SIZE = 20, 20
+SIZE = 48, 48
 COLOR = (255, 255, 255)
 
 SHEET = pygame.image.load('src\images\Cat Sprite.png')
