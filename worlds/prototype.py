@@ -9,6 +9,21 @@ from src.prototype.inventory import InventoryGUI
 from src.prototype.diceroll import DiceRoll
 from src.prototype.rat import Rat
 from src.prototype.cat import Cat
+from src.staticpage.startpage.bg_startpage import BackgroundStartPage
+from src.staticpage.startpage.textbox_cheesehunter import TextCheeseHunter
+from src.staticpage.startpage.textbox_start import TextStart
+from src.staticpage.gameoverpage.bg_gameoverpage import BackgroundGameOverPage
+from src.staticpage.gameoverpage.textbox_gameover import TextGameOver
+from src.staticpage.gameoverpage.textbox_restart import TextRestart
+
+def load_start_screen(world: World):
+
+    world.add(
+        BackgroundStartPage(),
+        TextCheeseHunter(),
+        TextStart(callback= lambda: load_gameplay(world))
+    )   
+
 
 def load_gameplay(world: World):
 
@@ -43,3 +58,8 @@ def load_end_screen(world: World):
     # clear exisiting items before adding new ones
     world.remove(*world.gameobjects)
     # add whatever gameobject you need here
+    world.add(
+        BackgroundStartPage(),
+        TextGameOver(),
+        TextRestart(callback= lambda: load_gameplay(world))
+    )   
