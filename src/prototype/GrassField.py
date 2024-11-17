@@ -16,7 +16,7 @@ class GrassField(GameObject):
         self.sprite = Sprite()
         self.sprite.src_image = pygame.image.load("src/images/grass_field.png")
         self.sprite.x = self.position.grid_position[0] * 48
-        self.sprite.y = self.position.grid_position[1] * 48
+        self.sprite.y = self.position.grid_position[1] * 45
         
     def on_create(self, world: World) -> None:
         world.sprites.add(self.sprite)
