@@ -42,7 +42,5 @@ class DiceRoll(GameObject):
             self.dice_anim.image_list = [r[1] for r in rolls]
             self.walk_step = rolls[-1][0]
 
-            print("walk_step: ", self.walk_step)
-
         self.sprite.src_image = self.dice_anim.update(frame.dt)
         self.can_walk = self.dice_anim.is_done 
