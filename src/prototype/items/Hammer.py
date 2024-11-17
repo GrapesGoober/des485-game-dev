@@ -37,11 +37,6 @@ class HammerShopGUI(GameObject):
     def on_remove(self, world: 'World'):
         world.sprites.remove(self.sprite)
 
-    def on_update(self, world: 'World', frame: Frame):
-        for n in self.position.get_neighbours(world):
-            if n.parent_object == self.player:
-                world.remove(self)
-
     def on_update(self, world, frame):
         for e in frame.events:
             mouse_x, mouse_y = pygame.mouse.get_pos()
