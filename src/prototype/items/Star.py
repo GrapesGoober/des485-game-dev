@@ -71,16 +71,19 @@ class StarInventoryGUI():
         self.sprite.src_image.set_alpha(100)
         if self.item.player.current_state == RatStates.USE_ITEM:
             self.sprite.src_image.set_alpha(255)
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            in_bounds = (
-                mouse_x > self.sprite.x - SIZE[0] and
-                mouse_x < self.sprite.x + SIZE[0] and
-                mouse_y > self.sprite.y - SIZE[1] and
-                mouse_y < self.sprite.y + SIZE[1]
-            )
-            if in_bounds:
-                self.item.use_item()
-                world.remove(self)
+            for e in frame.events:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
+                    mouse_x, mouse_y = pygame.mouse.get_pos()
+                    in_bounds = (
+                        mouse_x > self.sprite.x - SIZE[0] and
+                        mouse_x < self.sprite.x + SIZE[0] and
+                        mouse_y > self.sprite.y - SIZE[1] and
+                        mouse_y < self.sprite.y + SIZE[1]
+                    )
+                    if in_bounds:
+                        self.item.use_item()
+                        world.remove(self)
 
     def on_remove(self, world):
         world.sprites.remove(self.sprite)
