@@ -7,6 +7,7 @@ from src.grid_position import GridPosition
 from src.prototype.diceroll import DiceRoll
 from src.get_sprites_list import get_sprites_list
 from src.animation_loop import AnimationLoop
+from worlds.prototype import load_end_screen_mission_failed
 
 SIZE = 48, 48
 COLOR = (255, 255, 255)
@@ -88,10 +89,8 @@ class Rat(GameObject):
     def get_eaten(self, world: World) -> None:
         self.health -= 1
         if self.health <= 0:
-            world.remove(self)
-            print("Player: Game Over")
+            load_end_screen_mission_failed(world)
         else:
-            print("Player: Get eaten")
             self.position.grid_position = self.spawn_position
             self.diceroll.walk_step = 0
             self.diceroll.roll_dice()
