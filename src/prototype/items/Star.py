@@ -62,11 +62,11 @@ class StarInventoryGUI():
         world.sprites.add(self.sprite)
 
     def on_update(self, world: 'World', frame: Frame):
+        self.sprite.position = self.item.player.inventory.get_item_gui_position(self)
+
         self.sprite.src_image.set_alpha(100)
         if self.item.player.current_state == RatStates.USE_ITEM:
             self.sprite.src_image.set_alpha(255)
-            self.sprite.position = self.item.player.inventory.get_item_gui_position(self)
-
             if pygame.key.get_pressed()[pygame.K_1]:
                 print("Player: Star used")
                 self.item.use_item()
