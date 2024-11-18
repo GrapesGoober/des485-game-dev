@@ -81,6 +81,9 @@ class HammerShopGUI(GameObject):
                     # Remove nut from player
                     self.player.nut_counter -= ITEM_NUT_COST
 
+                    # Play sound
+                    pygame.mixer.Sound.play(pygame.mixer.Sound('src/sound/shop_buy.mp3'))
+
                     # Add item to inventory
                     item_gui = HammerInventoryGUI(self)
                     world.add(item_gui)
@@ -157,6 +160,9 @@ class HammerInventoryGUI(GameObject):
                                 cat.become_confused()
                                 # Player can walk again
                                 tree.player.current_state = RatStates.WALK_END
+
+                            # Play sound
+                            pygame.mixer.Sound.play(pygame.mixer.Sound('src/sound/toy_hammer.mp3'))
 
                             # Remove Hammer gui from world
                             self.item.player.inventory.remove_item_gui(self)

@@ -47,5 +47,9 @@ class Tree(GameObject):
 
                     # Check if the player has a tuna can, else cat pounces player
                     if self.player.inventory.has_item(TunaCanInventoryGUI):
+
+                        # Play sound
+                        pygame.mixer.Sound.play(pygame.mixer.Sound('src/sound/prompt_user.mp3'))
+
                         world.add(TunaCanGUI(player=self.player, cat=cat))
                     else: cat.pounce_player()

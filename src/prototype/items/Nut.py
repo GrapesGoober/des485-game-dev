@@ -35,6 +35,10 @@ class Nut(GameObject):
 
         for n in self.position.get_neighbours(world):
             if n.parent_object == self.player:
+
+                # Play sound
+                pygame.mixer.Sound.play(pygame.mixer.Sound('src/sound/nut_collect.mp3'))
+
                 self.player.nut_counter += 1
                 print("Player nut counter: ", self.player.nut_counter)
                 world.remove(self)

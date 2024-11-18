@@ -43,6 +43,9 @@ class RatHole(GameObject):
                 # Set the player's spawn position to the rat hole's position
                 self.player.spawn_position = self.position.grid_position
 
+                # Play sound
+                pygame.mixer.Sound.play(pygame.mixer.Sound('src/sound/rathole_reached.mp3'))
+
                 # Change sprite
                 self.sprite.src_image = pygame.transform.scale(
                     pygame.image.load("src/images/items/rat_hole_reached.png"),

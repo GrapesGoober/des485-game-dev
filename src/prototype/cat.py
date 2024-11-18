@@ -78,6 +78,10 @@ class Cat(GameObject):
             case CatStates.IDLE: ...
             case CatStates.WILL_POUNCE:
                 if self.current_anim.is_done:
+
+                    # Play sound
+                    pygame.mixer.Sound.play(pygame.mixer.Sound('src/sound/cat_angry.mp3'))
+
                     self.current_state = CatStates.POUNCE
                     self.current_anim.reset()
                     self._jumps_towards(self.player.position.grid_position)
