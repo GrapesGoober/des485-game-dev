@@ -4,7 +4,7 @@ from lib import Frame, GameObject, World, Sprite
 
 from src.grid_position import GridPosition
 
-SIZE = 720, 480
+SIZE = 960, 640
 
 class GrassField(GameObject):
     def __init__(self, **metadata: Any) -> None:
@@ -14,8 +14,11 @@ class GrassField(GameObject):
 
         # Create sprite 
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.image.load("src/images/grass_field.png")
-        self.sprite.x = self.position.grid_position[0] * 48
+        self.sprite.src_image = pygame.transform.scale(
+            pygame.image.load("src/images/grass_field.png"),
+            SIZE
+        )
+        self.sprite.x = self.position.grid_position[0] * 49
         self.sprite.y = self.position.grid_position[1] * 45
         
     def on_create(self, world: World) -> None:

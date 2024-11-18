@@ -5,7 +5,7 @@ from lib import Frame, GameObject, World, Sprite
 from src.grid_position import GridPosition
 from src.prototype.rat import Rat
 
-SIZE = 48, 48
+SIZE = 64, 64
 
 class RatHole(GameObject):
     """
@@ -24,7 +24,10 @@ class RatHole(GameObject):
         
         # Create sprite
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.image.load("src/images/items/rat_hole.png")
+        self.sprite.src_image = pygame.transform.scale(
+            pygame.image.load("src/images/items/rat_hole.png"),
+            SIZE
+        )
         self.sprite.x = metadata['grid_position'][0] * SIZE[0]
         self.sprite.y = metadata['grid_position'][1] * SIZE[1]
 
@@ -41,7 +44,10 @@ class RatHole(GameObject):
                 self.player.spawn_position = self.position.grid_position
 
                 # Change sprite
-                self.sprite.src_image = pygame.image.load("src/images/items/rat_hole_reached.png")
+                self.sprite.src_image = pygame.transform.scale(
+                    pygame.image.load("src/images/items/rat_hole_reached.png"),
+                    SIZE
+                )
 
                 # Remove the rat hole from the world
                 world.remove(self)

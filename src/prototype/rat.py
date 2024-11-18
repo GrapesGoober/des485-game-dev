@@ -8,11 +8,11 @@ from src.prototype.diceroll import DiceRoll
 from src.get_sprites_list import get_sprites_list
 from src.animation_loop import AnimationLoop
 
-SIZE = 48, 48
+SIZE = 64, 64
 COLOR = (255, 255, 255)
 
 SHEET = pygame.image.load('src\images\Mouse_Walking_Sprite.png')
-SPRITES = get_sprites_list(SHEET, (16, 16), (3, 3))
+SPRITES = get_sprites_list(SHEET, (16, 16), (4, 4))
 DOWN_WALK = AnimationLoop(SPRITES[0:4])
 RIGHT_WALK = AnimationLoop(SPRITES[8:12])
 UP_WALK = AnimationLoop(SPRITES[16:20])

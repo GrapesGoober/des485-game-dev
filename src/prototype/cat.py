@@ -10,11 +10,11 @@ from src.animation_loop import AnimationLoop
 from typing import Callable
 from src.prototype.rat import Rat 
 
-SIZE = 48, 48
+SIZE = 64, 64
 COLOR = (255, 255, 255)
 
 SHEET = pygame.image.load('src\images\Cat Sprite.png')
-SPRITES = get_sprites_list(SHEET, (16, 16), (3, 3))
+SPRITES = get_sprites_list(SHEET, (16, 16), (4, 4))
 
 CAT = AnimationLoop([SPRITES[0]])
 

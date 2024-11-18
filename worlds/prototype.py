@@ -46,85 +46,61 @@ def load_gameplay(world: World):
     world.remove(*world.gameobjects)
 
     # some objects are needed as dependency
-    dice = DiceRoll((50, 50))
+    dice = DiceRoll((1210, 660))
     inventory_gui = InventoryGUI((1180, 100))
-    player = Rat(dice=dice, grid_position=(6, 3), inventory=inventory_gui)
+    player = Rat(dice=dice, grid_position=(3, 1), inventory=inventory_gui)
     
     tree_params = [
-        ((6, 4), False), # tree1
-        ((7, 5), False), # 2
-        ((6, 9), False), # 3
-        ((7, 11), False), # 4
-        ((8, 8), False), # 5
-        ((8, 7), False),
-        ((9, 10), False),
-        ((9, 8), False),
-        ((9, 5), False),
-        ((9, 4), False),
-        ((9, 3), False),
-        ((10, 3), False),
-        ((10, 6), False),
-        ((10, 10), False), # 14
-        ((11, 11), False),
-        ((12, 9), False),
-        ((12, 6), False),
-        ((12, 4), False),
-        ((13, 8), False),
-        ((13, 12), False), # 20
-        ((14, 12), False), 
-        ((14, 5), False), 
-        ((15, 9), False), 
-        ((15, 3), False), # 24
-        ((16, 5), False), 
-        ((16, 10), False),
-        ((16, 11), False), # 27
-        ((17, 10), False), 
-        ((17, 8), False), 
-        ((17, 7), False), 
-        ((17, 3), False), # 31
-        ((18, 5), False),  
-        ((18, 7), False),  
-        ((19, 12), False),  
-        ((19, 10), False),  
-        ((20, 6), False), 
-        ((20, 3), False), 
+        ((3, 2), False), ((4, 3), False), ((3, 7), False), ((4, 9), False), ((5, 6), False),
+        ((5, 5), False), ((6, 8), False), ((6, 6), False), ((6, 3), False), ((6, 2), False),
+        ((6, 1), False), ((7, 1), False), ((7, 4), False), ((7, 8), False), ((8, 9), False),
+        ((9, 7), False), ((9, 4), False), ((9, 2), False), ((10, 6), False), ((10, 10), False),
+        ((11, 10), False), ((11, 3), False), ((12, 7), False), ((12, 1), False), ((13, 3), False),
+        ((13, 8), False), ((13, 9), False), ((14, 8), False), ((14, 6), False), ((14, 5), False),
+        ((14, 1), False), ((15, 3), False), ((15, 5), False), ((16, 10), False), ((16, 8), False),
+        ((17, 4), False), ((17, 1), False)
     ]
+
+
     trees = [Tree(player, position, param) for position, param in tree_params]
 
     border_positions = [
-        (5, 3), (5, 4), (5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (5, 10), (5, 11), (5, 12),
-        (21, 3), (21, 4), (21, 5), (21, 6), (21, 7), (21, 8), (21, 9), (21, 10), (21, 11), (21, 12),
-        (6, 2), (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2), (13, 2), (14, 2), (15, 2), (16, 2), (17, 2), (18, 2), (19, 2), (20, 2),
-        (6, 13), (7, 13), (8, 13), (9, 13), (10, 13), (11, 13), (12, 13), (13, 13), (14, 13), (15, 13), (16, 13), (17, 13), (18, 13), (19, 13), (20, 13),
-        (5, 2), (21, 2), (5, 13), (21, 13)
-
+        (2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6), (2, 7), (2, 8), (2, 9), (2, 10),
+        (18, 1), (18, 2), (18, 3), (18, 4), (18, 5), (18, 6), (18, 7), (18, 8), (18, 9), (18, 10),
+        (3, 0), (4, 0), (5, 0), (6, 0), (7, 0), (8, 0), (9, 0), (10, 0), (11, 0), (12, 0), (13, 0),
+        (14, 0), (15, 0), (16, 0), (17, 0),
+        (3, 11), (4, 11), (5, 11), (6, 11), (7, 11), (8, 11), (9, 11), (10, 11), (11, 11), (12, 11), 
+        (13, 11), (14, 11), (15, 11), (16, 11), (17, 11),
+        (2, 0), (18, 0), (2, 11), (18, 11)
     ]
+
     border = [BorderGrass(player, position) for position in border_positions]
 
     rock_positions = [
-        (6, 5),(6, 8), (6, 12), (9, 12), (10, 4), (13, 9), (14, 3), (14, 8), (16, 7), (17, 11),
-        (18, 3), (18, 8), (20, 8)
+        (3, 3), (3, 6), (3, 10), (6, 10), (7, 2), (10, 7), (11, 1), (11, 6), (13, 5), (14, 9), 
+        (15, 1), (15, 6), (17, 6)
     ]
+
     rocks = [Rock(player, position) for position in rock_positions]
 
-    rainbow_positions = [(6, 7), (10, 5), (15, 11)]
+    rainbow_positions = [(3, 5), (7, 3), (12, 9)]
     rainbows = [Rainbow(player=player, grid_position=position) for position in rainbow_positions]
 
-    star_positions = [(11, 9), (16, 9), (19, 4)]
+    star_positions = [(8, 7), (13, 7), (16, 2)]
     stars = [Star(player=player, grid_position=position) for position in star_positions]
 
-    cheese = Cheese(player, callback= lambda: load_end_screen_mission_completed(world), grid_position= (20, 12))
+    cheese = Cheese(player, callback= lambda: load_end_screen_mission_completed(world), grid_position= (17, 10))
     # cheese2 = Cheese(player, callback= lambda: load_end_screen_mission_completed(world), grid_position= (8, 3))
 
-    rathole_positions = [(7, 12), (11, 3), (16, 3)]
+    rathole_positions = [(4, 10), (8, 1), (13, 1)]
     ratholes = [RatHole(player=player, grid_position=position) for position in rathole_positions]
 
-    nut_positions = [(7, 10), (10, 7), (11, 12), (16, 4), (18, 10), (20, 7)]
+    nut_positions = [(4, 8), (7, 5), (8, 10), (13, 2), (15, 8), (17, 5)]
     nuts = [Nut(player=player, grid_position=position) for position in nut_positions]
 
-    shop = Shop(player=player, grid_position=(14, 7))
+    shop = Shop(player=player, grid_position=(11, 5))
 
-    cat = Cat(player = player, grid_position = (6, 10), callback= lambda: load_end_screen_mission_failed(world))
+    cat = Cat(player = player, grid_position = (3, 8), callback= lambda: load_end_screen_mission_failed(world))
 
     world.add(
         GrassField(grid_position=(13, 8)),
@@ -144,6 +120,7 @@ def load_gameplay(world: World):
         shop, 
         cat,
         *border
+        # *border
     )
 
 def load_end_screen_mission_completed(world: World):

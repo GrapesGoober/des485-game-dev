@@ -7,7 +7,7 @@ from src.prototype.items.Hammer import HammerShopGUI
 from src.prototype.rat import Rat
 from src.grid_position import GridPosition
 
-SIZE = 48, 48
+SIZE = 64, 64
 
 class Shop(GameObject):
     def __init__(self, **metadata: Any) -> None:
@@ -18,7 +18,11 @@ class Shop(GameObject):
 
         # Create sprite 
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.image.load("src/images/shop.png")
+        self.sprite.src_image = pygame.transform.scale(
+            pygame.image.load("src/images/shop.png"),
+            SIZE
+        )
+        
         self.sprite.x = self.position.grid_position[0] * SIZE[0]
         self.sprite.y = self.position.grid_position[1] * SIZE[1]
         self.items: list[GameObject] = [

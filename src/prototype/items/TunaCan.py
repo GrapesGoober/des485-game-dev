@@ -5,7 +5,7 @@ from lib import Frame, GameObject, World, Sprite
 from src.prototype.cat import Cat
 from src.prototype.rat import Rat, RatStates
 
-SIZE = 48, 48
+SIZE = 64, 64
 ITEM_NUT_COST = 1
 
 class TunaCanShopGUI(GameObject):
@@ -25,7 +25,10 @@ class TunaCanShopGUI(GameObject):
 
         # Create sprite
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.image.load("src/images/items/tuna_can.png")
+        self.sprite.src_image = pygame.transform.scale(
+            pygame.image.load("src/images/items/tuna_can.png"),
+            SIZE
+        )
         self.sprite.position = metadata['position']
 
     def on_create(self, world: 'World'):

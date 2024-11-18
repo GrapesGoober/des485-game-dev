@@ -6,7 +6,8 @@ from src.grid_position import GridPosition
 from src.prototype.inventory import InventoryGUI
 from src.prototype.rat import Rat, RatStates
 
-SIZE = 48, 48
+SIZE = 64, 64
+RAINBOW_SIZE = 64, 40
 
 class Rainbow(GameObject):
     """
@@ -25,7 +26,10 @@ class Rainbow(GameObject):
 
         # Create sprite
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.image.load("src/images/items/rainbow.png")
+        self.sprite.src_image = pygame.transform.scale(
+            pygame.image.load("src/images/items/rainbow.png"),
+            RAINBOW_SIZE
+        )
         self.sprite.x = metadata['grid_position'][0] * SIZE[0]
         self.sprite.y = metadata['grid_position'][1] * SIZE[1]
 
