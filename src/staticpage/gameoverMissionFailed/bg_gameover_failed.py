@@ -36,6 +36,10 @@ class BackgroundGameOverFailPage(GameObject):
                     # Stop music
                     pygame.mixer.music.stop()
 
+                    # Play sound
+                    pygame.mixer.music.load('src/sound/background_music.mp3')
+                    pygame.mixer.music.play(-1)
+
                     self.callback()
 
 

@@ -38,6 +38,10 @@ class BackgroundStartPage(GameObject):
                     pygame.mixer.music.stop()
                     pygame.mixer.Sound.play(pygame.mixer.Sound('src/sound/start_pressed.mp3'))
 
+                    # Player BGM
+                    pygame.mixer.music.load('src/sound/background_music.mp3')
+                    pygame.mixer.music.play(-1)
+
                     self.callback()
 
 
