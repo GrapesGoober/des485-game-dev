@@ -112,6 +112,8 @@ def load_gameplay(world: World):
 
     shop = Shop(player=player, grid_position=(14, 7))
 
+    cat = Cat(player = player, grid_position = (6, 10), callback= lambda: load_end_screen_mission_failed(world))
+
     world.add(
         GrassField(grid_position=(13, 8)),
         player,
@@ -125,7 +127,7 @@ def load_gameplay(world: World):
         *ratholes,
         *nuts,
         shop, 
-        Cat(player = player, grid_position = (7, 4), callback= lambda: load_end_screen_mission_failed(world))
+        cat
     )
 
 def load_end_screen_mission_completed(world: World):
