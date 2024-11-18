@@ -9,8 +9,7 @@ COLOR = (255, 0, 255)
 class Rock(GameObject):
     def __init__(self, player: Rat, grid_position: tuple[int, int]) -> None:
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.Surface(SIZE)
-        self.sprite.src_image.fill(COLOR)
+        self.sprite.src_image = pygame.image.load("src/images/rock.png")
         self.sprite.x = grid_position[0] * SIZE[0]
         self.sprite.y = grid_position[1] * SIZE[1]
         self.position = GridPosition(grid_position)

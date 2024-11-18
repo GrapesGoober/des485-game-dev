@@ -18,7 +18,7 @@ class Shop(GameObject):
 
         # Create sprite 
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.image.load("src/images/items/shop.png")
+        self.sprite.src_image = pygame.image.load("src/images/shop.png")
         self.sprite.x = self.position.grid_position[0] * SIZE[0]
         self.sprite.y = self.position.grid_position[1] * SIZE[1]
         self.items: list[GameObject] = [
