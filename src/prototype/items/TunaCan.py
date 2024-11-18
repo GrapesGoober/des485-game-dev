@@ -104,12 +104,11 @@ class TunaCanInventoryGUI(GameObject):
         world.sprites.remove(self.sprite)
     
     def on_update(self, world: World, frame: Frame):
-        if self.item.player.inventory.has_item(TunaCanInventoryGUI):
+        if self in self.item.player.inventory.items:
             self.sprite.position = self.item.player.inventory.get_item_gui_position(self)
         else:
             # Remove item gui from world
             world.remove(self)
-            self.item.player.inventory.remove_item_gui(self)
 
 class TunaCanGUI(GameObject):
     """
@@ -161,19 +160,15 @@ class TunaCanGUI(GameObject):
             # Remove tuna can gui from world
             world.remove(self)
 
-            # Remove tuna can from inventory
+            # Remove first instance of tuna can from inventory
             for item in self.player.inventory.items:
                 if isinstance(item, TunaCanInventoryGUI):
                     self.player.inventory.remove_item_gui(item)
                     world.remove(item)
+                    break
 
             # Have cat become confused
             self.cat.become_confused()
-
-            # Remove item gui from inventory
-            for item in self.player.inventory.items:
-                if isinstance(item, TunaCanInventoryGUI):
-                    self.player.inventory.items.remove(item)
 
             # Player can walk again
             self.player.current_state = RatStates.WALK_END
