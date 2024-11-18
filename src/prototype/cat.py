@@ -2,7 +2,7 @@ from enum import Enum
 from typing import Any
 import pygame
 from lib import Frame, GameObject, World, Sprite
-from src.prototype.rat import Rat
+from src.prototype.rat import Rat, RatStates
 from src.grid_position import GridPosition
 import random
 from src.prototype.diceroll import DiceRoll
@@ -21,14 +21,16 @@ CAT = AnimationLoop([SPRITES[0]])
 
 
 DOWN_JUMP = AnimationLoop(SPRITES[0:3], is_looping=False, interval_time=0.3)
-RIGHT_JUMP = AnimationLoop(SPRITES[5:7], is_looping=False, interval_time=0.3)
-UP_JUMP = AnimationLoop(SPRITES[10:12], is_looping=False, interval_time=0.3)
-LEFT_JUMP = AnimationLoop(SPRITES[15:17], is_looping=False, interval_time=0.3)
+RIGHT_JUMP = AnimationLoop(SPRITES[4:6], is_looping=False, interval_time=0.3)
+UP_JUMP = AnimationLoop(SPRITES[8:10], is_looping=False, interval_time=0.3)
+LEFT_JUMP = AnimationLoop(SPRITES[12:14], is_looping=False, interval_time=0.3)
 
 DOWN_IDLE = AnimationLoop([SPRITES[0]], is_looping=False, interval_time=0.3)
-RIGHT_IDLE = AnimationLoop([SPRITES[5]], is_looping=False, interval_time=0.3)
-UP_IDLE = AnimationLoop([SPRITES[10]], is_looping=False, interval_time=0.3)
-LEFT_IDLE = AnimationLoop([SPRITES[15]], is_looping=False, interval_time=0.3)
+RIGHT_IDLE = AnimationLoop([SPRITES[4]], is_looping=False, interval_time=0.3)
+UP_IDLE = AnimationLoop([SPRITES[8]], is_looping=False, interval_time=0.3)
+LEFT_IDLE = AnimationLoop([SPRITES[12]], is_looping=False, interval_time=0.3)
+# I'd just use default confused idle
+CONFUSED = AnimationLoop([SPRITES[2]], is_looping=False, interval_time=0.5)
 
 class CatStates(Enum):
     IDLE = 1        # show itself in front of tree, using DOWN_JUMP
@@ -84,6 +86,10 @@ class Cat(GameObject):
                     self.current_state = CatStates.RETURN
                     self._jumps_towards(self.initial_position)
                     self.player.get_eaten(world)
+            case CatStates.CONFUSE:
+                if self.current_anim.is_done:
+                    self.current_state = CatStates.RETURN
+                    self._jumps_towards(self.initial_position)
             case CatStates.RETURN:
                 if self.current_anim.is_done:
                     world.remove(self)
@@ -101,6 +107,8 @@ class Cat(GameObject):
 
     # internal function to use for jumping animation
     def _jumps_towards(self, to: tuple[int, int]) -> None:
+        # defualt to UP_JUMP if no direction found
+        self.current_anim = UP_JUMP
         if to[0] < self.position.grid_x:
             self.current_anim = LEFT_JUMP
         if to[0] > self.position.grid_x:
@@ -111,3 +119,9 @@ class Cat(GameObject):
             self.current_anim = DOWN_JUMP
         self.current_anim.reset()
         self.position.grid_position = to
+
+    def become_confused(self) -> None:
+        self.current_state = CatStates.CONFUSE
+        self.current_anim = CONFUSED
+        self.current_anim.reset()
+        

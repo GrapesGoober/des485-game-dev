@@ -123,13 +123,12 @@ class HammerInventoryGUI(GameObject):
 
                             tree = n.parent_object
                             if tree.has_cat:
-
-                                # Display cat for 2 seconds
-                                world.add(
-                                    Cat(player=tree.player, grid_position=tree.position.grid_position))
-
-                                # Remove cat from tree
-                                tree.has_cat = False
+                                # draw that there's a cat, confused
+                                cat = Cat(tree.player, tree.position.grid_position)
+                                world.add(cat)
+                                cat.become_confused()
+                                # Player can walk again
+                                tree.player.current_state = RatStates.WALK_END
 
                             # Remove Hammer gui from world
                             world.remove(self)

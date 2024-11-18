@@ -138,8 +138,8 @@ class TunaCanGUI(GameObject):
                     self.player.inventory.remove_item_gui(item)
                     world.remove(item)
 
-            # Remove cat from world
-            world.remove(self.cat)
+            # Have cat become confused
+            self.cat.become_confused()
 
             # Remove item gui from inventory
             for item in self.player.inventory.items:
@@ -147,7 +147,7 @@ class TunaCanGUI(GameObject):
                     self.player.inventory.items.remove(item)
 
             # Player can walk again
-            self.player.current_state == RatStates.WALK_END
+            self.player.current_state = RatStates.WALK_END
 
             # Player move to previous position
             self.player.position.grid_position = self.player.previous_position
