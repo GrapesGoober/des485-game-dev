@@ -7,13 +7,16 @@ from src.prototype.cat import Cat
 from src.prototype.rat import Rat, RatStates
 from src.grid_position import GridPosition
 
-SIZE = 48, 48
+SIZE = 64, 64
 COLOR = (0, 255, 255)
 
 class Tree(GameObject):
     def __init__(self, player: Rat, grid_position: tuple[int, int], has_cat: bool) -> None:
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.image.load("src/images/tree.png")
+        self.sprite.src_image = pygame.transform.scale(
+            pygame.image.load("src/images/tree.png"),
+            SIZE
+        )
         self.sprite.x = grid_position[0] * SIZE[0]
         self.sprite.y = grid_position[1] * SIZE[1]
 

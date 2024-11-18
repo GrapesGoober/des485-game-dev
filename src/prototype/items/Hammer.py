@@ -7,7 +7,7 @@ from src.grid_position import GridPosition
 from src.prototype.tree import Tree
 from src.prototype.rat import Rat, RatStates
 
-SIZE = 48, 48
+SIZE = 64, 64
 ITEM_NUT_COST = 1
 
 
@@ -27,8 +27,11 @@ class HammerShopGUI(GameObject):
 
         # Create sprite
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.image.load(
-            "src/images/items/hammer.png")
+        
+        self.sprite.src_image = pygame.transform.scale(
+            pygame.image.load("src/images/items/hammer.png"),
+            SIZE
+        )
         self.sprite.position = metadata['position']
 
     def on_create(self, world: 'World'):

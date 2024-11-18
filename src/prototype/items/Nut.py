@@ -5,7 +5,7 @@ from lib import Frame, GameObject, World, Sprite
 from src.prototype.rat import Rat
 from src.grid_position import GridPosition
 
-SIZE = 48, 48
+SIZE = 64, 64
 
 class Nut(GameObject):
     def __init__(self, **metadata) -> None:
@@ -16,7 +16,10 @@ class Nut(GameObject):
 
         # Create sprite
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.image.load("src/images/items/nut.png")
+        self.sprite.src_image = pygame.transform.scale(
+            pygame.image.load("src/images/items/nut.png"),
+            SIZE
+        )
 
         # Set sprite position
         self.sprite.x = metadata['grid_position'][0] * SIZE[0]

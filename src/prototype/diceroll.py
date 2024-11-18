@@ -3,15 +3,33 @@ from src.animation_loop import AnimationLoop
 from lib import Frame, GameObject, World, Sprite
 import random
 
-DICE_FACES = [
-    (1, pygame.image.load("src/images/dice/1.png")),
-    (2, pygame.image.load("src/images/dice/2.png")),
-    (3, pygame.image.load("src/images/dice/3.png")),
-    (4, pygame.image.load("src/images/dice/4.png")),
-    (5, pygame.image.load("src/images/dice/5.png")),
-    (6, pygame.image.load("src/images/dice/6.png")),
-]
+# DICE_FACES = [
+#     (1, pygame.image.load("src/images/dice/1.png")),
+#     (2, pygame.image.load("src/images/dice/2.png")),
+#     (3, pygame.image.load("src/images/dice/3.png")),
+#     (4, pygame.image.load("src/images/dice/4.png")),
+#     (5, pygame.image.load("src/images/dice/5.png")),
+#     (6, pygame.image.load("src/images/dice/6.png")),
+# ]
+SIZE = 64, 64
+# DICE_FACES = [
+#     (1, pygame.image.load("src/images/dice/1.png")),
+#     (2, pygame.image.load("src/images/dice/2.png")),
+#     (3, pygame.image.load("src/images/dice/3.png")),
+#     (4, pygame.image.load("src/images/dice/4.png")),
+#     (5, pygame.image.load("src/images/dice/5.png")),
+#     (6, pygame.image.load("src/images/dice/6.png")),
+# ]
 
+# pygame.transform.scale(pygame.image.load("src/images/dice/1.png"), SIZE)
+DICE_FACES = [
+    (1, pygame.transform.scale(pygame.image.load("src/images/dice/1.png"), SIZE)),
+    (2, pygame.transform.scale(pygame.image.load("src/images/dice/2.png"), SIZE)),
+    (3, pygame.transform.scale(pygame.image.load("src/images/dice/3.png"), SIZE)),
+    (4, pygame.transform.scale(pygame.image.load("src/images/dice/4.png"), SIZE)),
+    (5, pygame.transform.scale(pygame.image.load("src/images/dice/5.png"), SIZE)),
+    (6, pygame.transform.scale(pygame.image.load("src/images/dice/6.png"), SIZE)),
+]
 class DiceRoll(GameObject):
     def __init__(self, position: tuple[int, int]) -> None:
         self.sprite = Sprite()

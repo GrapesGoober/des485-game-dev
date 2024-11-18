@@ -5,7 +5,7 @@ from src.grid_position import GridPosition
 from lib import Frame, GameObject, World, Sprite
 from src.prototype.rat import Rat, RatStates
 
-SIZE = 48, 48
+SIZE = 64, 64
 
 class Star(GameObject):
     """
@@ -24,7 +24,10 @@ class Star(GameObject):
 
         # Create sprite
         self.sprite = Sprite()
-        self.sprite.src_image = pygame.image.load("src/images/items/star.png")
+        self.sprite.src_image = pygame.transform.scale(
+            pygame.image.load("src/images/items/star.png"),
+            SIZE
+        )
         self.sprite.x = metadata['grid_position'][0] * SIZE[0]
         self.sprite.y = metadata['grid_position'][1] * SIZE[1]
         
