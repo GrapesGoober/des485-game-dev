@@ -51,6 +51,7 @@ class Star(GameObject):
 
     def use_item(self):
         self.player.diceroll.walk_step += 1
+        self.player.nut_counter += 3
 
 class StarInventoryGUI():
     def __init__(self, item: Star) -> None:
