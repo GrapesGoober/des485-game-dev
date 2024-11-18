@@ -93,7 +93,7 @@ class TunaCanInventoryGUI(GameObject):
 
         # Create sprite
         self.sprite = Sprite()
-        self.sprite.src_image = item.sprite.src_image
+        self.sprite.src_image = item.sprite.src_image.copy()
 
         self.item = item
 
