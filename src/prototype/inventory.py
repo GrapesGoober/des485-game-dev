@@ -1,7 +1,7 @@
 import pygame
 from lib import Frame, GameObject, World, Sprite
 
-ITEM_GUI_HEIGHT = 100
+ITEM_GUI_HEIGHT = 64
 
 class InventoryGUI(GameObject):
     def __init__(self, position: tuple[int, int]) -> None:

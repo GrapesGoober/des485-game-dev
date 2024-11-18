@@ -50,7 +50,7 @@ def load_gameplay(world: World):
 
     # some objects are needed as dependency
     dice = DiceRoll((80, 85))
-    inventory_gui = InventoryGUI((1180, 100))
+    inventory_gui = InventoryGUI((1200, 100))
     player = Rat(
         dice=dice, 
         grid_position=(3, 1), 
