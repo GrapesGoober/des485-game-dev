@@ -87,4 +87,5 @@ class RainbowInventoryGUI():
                     )
                     if in_bounds:
                         self.item.use_item()
+                        self.item.player.inventory.remove_item_gui(self)
                         world.remove(self)

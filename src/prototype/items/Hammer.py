@@ -134,4 +134,5 @@ class HammerInventoryGUI(GameObject):
                                 tree.player.current_state = RatStates.WALK_END
 
                             # Remove Hammer gui from world
+                            self.item.player.inventory.remove_item_gui(self)
                             world.remove(self)

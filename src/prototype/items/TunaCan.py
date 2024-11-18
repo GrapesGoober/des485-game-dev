@@ -84,6 +84,7 @@ class TunaCanInventoryGUI(GameObject):
         else:
             # Remove item gui from world
             world.remove(self)
+            self.item.player.inventory.remove_item_gui(self)
 
 class TunaCanGUI(GameObject):
     """
