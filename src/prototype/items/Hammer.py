@@ -5,7 +5,7 @@ from lib import Frame, GameObject, World, Sprite
 from src.prototype.cat import Cat
 from src.grid_position import GridPosition
 from src.prototype.tree import Tree
-from src.prototype.rat import Rat
+from src.prototype.rat import Rat, RatStates
 
 SIZE = 48, 48
 ITEM_NUT_COST = 1
@@ -71,7 +71,7 @@ class HammerInventoryGUI(GameObject):
 
         # Create sprite
         self.sprite = Sprite()
-        self.sprite.src_image = item.sprite.src_image
+        self.sprite.src_image = item.sprite.src_image.copy()
 
         # Dragging state
         self.is_dragging = False
@@ -83,49 +83,53 @@ class HammerInventoryGUI(GameObject):
         world.sprites.remove(self.sprite)
 
     def on_update(self, world: 'World', frame: Frame):
+        
         # Update position
         if not self.is_dragging:
             self.sprite.position = self.item.player.inventory.get_item_gui_position(
                 self)
+            
+        self.sprite.src_image.set_alpha(100)
+        if self.item.player.current_state == RatStates.USE_ITEM:
+            self.sprite.src_image.set_alpha(255)
+            for e in frame.events:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
 
-        for e in frame.events:
-            mouse_x, mouse_y = pygame.mouse.get_pos()
+                in_bounds = (
+                    mouse_x > self.sprite.x - SIZE[0] and
+                    mouse_x < self.sprite.x + SIZE[0] and
+                    mouse_y > self.sprite.y - SIZE[1] and
+                    mouse_y < self.sprite.y + SIZE[1]
+                )
 
-            in_bounds = (
-                mouse_x > self.sprite.x - SIZE[0] and
-                mouse_x < self.sprite.x + SIZE[0] and
-                mouse_y > self.sprite.y - SIZE[1] and
-                mouse_y < self.sprite.y + SIZE[1]
-            )
+                if e.type == pygame.MOUSEBUTTONDOWN and in_bounds:
 
-            if e.type == pygame.MOUSEBUTTONDOWN and in_bounds:
+                    if in_bounds:
+                        self.is_dragging = True
 
-                if in_bounds:
-                    self.is_dragging = True
+                elif e.type == pygame.MOUSEMOTION:
+                    if self.is_dragging:
+                        # Item sprite follow mouse
+                        self.sprite.x = mouse_x
+                        self.sprite.y = mouse_y
 
-            elif e.type == pygame.MOUSEMOTION:
-                if self.is_dragging:
-                    # Item sprite follow mouse
-                    self.sprite.x = mouse_x
-                    self.sprite.y = mouse_y
+                elif e.type == pygame.MOUSEBUTTONUP:
 
-            elif e.type == pygame.MOUSEBUTTONUP:
+                    self.is_dragging = False
+                    mouse_grid_position = (mouse_x // SIZE[0], mouse_y // SIZE[1])
 
-                self.is_dragging = False
-                mouse_grid_position = (mouse_x // SIZE[0], mouse_y // SIZE[1])
+                    for n in GridPosition.get_objects_at(world, mouse_grid_position, manhat_dist=1):
+                        if isinstance(n.parent_object, Tree):
 
-                for n in GridPosition.get_objects_at(world, mouse_grid_position, manhat_dist=1):
-                    if isinstance(n.parent_object, Tree):
+                            tree = n.parent_object
+                            if tree.has_cat:
 
-                        tree = n.parent_object
-                        if tree.has_cat:
+                                # Display cat for 2 seconds
+                                world.add(
+                                    Cat(player=tree.player, grid_position=tree.position.grid_position))
 
-                            # Display cat for 2 seconds
-                            world.add(
-                                Cat(player=tree.player, grid_position=tree.position.grid_position))
+                                # Remove cat from tree
+                                tree.has_cat = False
 
-                            # Remove cat from tree
-                            tree.has_cat = False
-
-                        # Remove Hammer gui from world
-                        world.remove(self)
+                            # Remove Hammer gui from world
+                            world.remove(self)

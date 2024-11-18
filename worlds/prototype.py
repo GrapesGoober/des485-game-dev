@@ -1,4 +1,5 @@
 from lib import World
+from src.prototype.item_use_prompt import ItemUsePrompt
 from src.prototype.items.cheese import Cheese
 from src.prototype.items.Nut import Nut
 from src.prototype.rock import Rock
@@ -23,6 +24,7 @@ def load_gameplay(world: World):
         player,
         dice,
         inventory_gui,
+        ItemUsePrompt(player),
         Cat(player=player, grid_position=(30, 2)),
         Tree(player, (6, 6), False),
         Tree(player, (7, 7), False),
