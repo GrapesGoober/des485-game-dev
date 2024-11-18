@@ -10,6 +10,7 @@ from src.prototype.inventory import InventoryGUI
 from src.prototype.diceroll import DiceRoll
 from src.prototype.rat import Rat
 from src.prototype.cat import Cat
+from src.prototype.bordergrass import BorderGrass
 from src.prototype.items.Rainbow import Rainbow
 from src.prototype.items.Star import Star
 from src.prototype.items.cheese import Cheese
@@ -90,6 +91,16 @@ def load_gameplay(world: World):
     ]
     trees = [Tree(player, position, param) for position, param in tree_params]
 
+    border_positions = [
+        (5, 3), (5, 4), (5, 5), (5, 6), (5, 7), (5, 8), (5, 9), (5, 10), (5, 11), (5, 12),
+        (21, 3), (21, 4), (21, 5), (21, 6), (21, 7), (21, 8), (21, 9), (21, 10), (21, 11), (21, 12),
+        (6, 2), (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2), (13, 2), (14, 2), (15, 2), (16, 2), (17, 2), (18, 2), (19, 2), (20, 2),
+        (6, 13), (7, 13), (8, 13), (9, 13), (10, 13), (11, 13), (12, 13), (13, 13), (14, 13), (15, 13), (16, 13), (17, 13), (18, 13), (19, 13), (20, 13),
+        (5, 2), (21, 2), (5, 13), (21, 13)
+
+    ]
+    border = [BorderGrass(player, position) for position in border_positions]
+
     rock_positions = [
         (6, 5),(6, 8), (6, 12), (9, 12), (10, 4), (13, 9), (14, 3), (14, 8), (16, 7), (17, 11),
         (18, 3), (18, 8), (20, 8)
@@ -131,7 +142,8 @@ def load_gameplay(world: World):
         *ratholes,
         *nuts,
         shop, 
-        cat
+        cat,
+        *border
     )
 
 def load_end_screen_mission_completed(world: World):
