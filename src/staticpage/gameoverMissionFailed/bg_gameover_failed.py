@@ -7,14 +7,13 @@ from src.get_sprites_list import get_sprites_list
 from typing import Callable
 
 SIZE = 1280, 720
-# COLOR = (255, 255, 255)
 
-class BackgroundStartPage(GameObject):
+class BackgroundGameOverFailPage(GameObject):
     def __init__(self, callback: Callable) -> None:
         self.sprite = Sprite()
         self.sprite.src_image = pygame.Surface(SIZE)
         self.sprite.src_image = pygame.transform.scale(
-            pygame.image.load('src\images\startpage_background.png'),
+            pygame.image.load('src\images\gameover_ratgone.png'),
             (1280, 720) 
         )
         self.callback: Callable = callback
