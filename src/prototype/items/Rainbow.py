@@ -52,6 +52,7 @@ class Rainbow(GameObject):
 
     def use_item(self):
         self.player.diceroll.walk_step += 2
+        self.player.nut_counter += 3
 
 class RainbowInventoryGUI():
     def __init__(self, item: Rainbow) -> None:
@@ -74,7 +75,13 @@ class RainbowInventoryGUI():
         self.sprite.src_image.set_alpha(100)
         if self.item.player.current_state == RatStates.USE_ITEM:
             self.sprite.src_image.set_alpha(255)    
-            if pygame.key.get_pressed()[pygame.K_2]:
-                print("Player: Rainbow used")
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            in_bounds = (
+                mouse_x > self.sprite.x - SIZE[0] and
+                mouse_x < self.sprite.x + SIZE[0] and
+                mouse_y > self.sprite.y - SIZE[1] and
+                mouse_y < self.sprite.y + SIZE[1]
+            )
+            if in_bounds:
                 self.item.use_item()
                 world.remove(self)
