@@ -101,9 +101,8 @@ class Rat(GameObject):
                 if self.diceroll.can_walk:
                     self.current_state = RatStates.USE_ITEM
             case RatStates.USE_ITEM:
-                # TODO: how can the USE_ITEM state be implemented with items logic?
-                # needs to have prompt to ask for item use, which allows item to be used
-                self.current_state = RatStates.WALK
+                # this state is controlled by the ItemUsePrompt
+                ...
             case RatStates.WALK:
                 for event in frame.events:
                     if self.diceroll.walk_step > 0:

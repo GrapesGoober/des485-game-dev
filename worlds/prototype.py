@@ -1,4 +1,5 @@
 from lib import World
+from src.prototype.item_use_prompt import ItemUsePrompt
 from src.prototype.GrassField import GrassField
 from src.prototype.items.cheese import Cheese
 from src.prototype.rock import Rock
@@ -121,6 +122,7 @@ def load_gameplay(world: World):
         *trees,
         dice,
         inventory_gui,
+        ItemUsePrompt(player),
         *rainbows,
         *stars,
         cheese,
