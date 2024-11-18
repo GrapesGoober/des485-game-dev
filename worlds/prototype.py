@@ -117,7 +117,9 @@ def load_gameplay(world: World):
         *trees,
         dice,
         inventory_gui,
-        ItemUsePrompt(player),
+        # I think the item prompt is clunky
+        # Imma remove this for the time being
+        # ItemUsePrompt(player),
         *rainbows,
         *stars,
         cheese,
@@ -127,7 +129,7 @@ def load_gameplay(world: World):
         cheese2
     )
 
-def load_end_screen(world: World):
+def load_end_screen(world: World):#
     # clear exisiting items before adding new ones
     world.remove(*world.gameobjects)
     # add whatever gameobject you need here
