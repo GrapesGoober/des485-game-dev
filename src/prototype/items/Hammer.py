@@ -149,7 +149,7 @@ class HammerInventoryGUI(GameObject):
                     self.is_dragging = False
                     mouse_grid_position = (mouse_x // SIZE[0], mouse_y // SIZE[1])
 
-                    for n in GridPosition.get_objects_at(world, mouse_grid_position, manhat_dist=1):
+                    for n in GridPosition.get_objects_at(world, mouse_grid_position):
                         if isinstance(n.parent_object, Tree):
 
                             tree = n.parent_object
@@ -167,3 +167,6 @@ class HammerInventoryGUI(GameObject):
                             # Remove Hammer gui from world
                             self.item.player.inventory.remove_item_gui(self)
                             world.remove(self)
+
+                            # hammer can use for only one tree, so break loop
+                            break
