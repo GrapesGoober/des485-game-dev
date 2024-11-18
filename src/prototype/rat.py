@@ -42,7 +42,7 @@ class Rat(GameObject):
         self.sprite = Sprite()
         self.sprite.src_image = pygame.Surface(SIZE)
         self.sprite.src_image.fill(COLOR)
-        self.sprite.layer = 9
+        self.sprite.layer = 5
 
         # Create grid position
         self.position = GridPosition(grid_position)

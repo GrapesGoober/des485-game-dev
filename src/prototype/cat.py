@@ -49,7 +49,7 @@ class Cat(GameObject):
         self.position.parent_object = self
 
         self.sprite = Sprite()
-        self.sprite.layer = 5
+        self.sprite.layer = 6
         self.current_anim: AnimationLoop = DOWN_IDLE
         self.current_state = CatStates.IDLE
 
