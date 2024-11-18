@@ -58,14 +58,14 @@ def load_gameplay(world: World):
         on_death= lambda: load_end_screen_mission_failed(world))
     
     tree_params = [
-        ((3, 2), False), ((4, 3), True), ((3, 7), False), ((4, 9), False), ((5, 6), False),
-        ((5, 5), False), ((6, 8), False), ((6, 6), False), ((6, 3), False), ((6, 2), False),
-        ((6, 1), False), ((7, 1), False), ((7, 4), False), ((7, 8), False), ((8, 9), False),
-        ((9, 7), False), ((9, 4), False), ((9, 2), False), ((10, 6), False), ((10, 10), False),
-        ((11, 10), False), ((11, 3), False), ((12, 7), False), ((12, 1), False), ((13, 3), False),
-        ((13, 8), False), ((13, 9), False), ((14, 8), False), ((14, 6), False), ((14, 5), False),
-        ((14, 1), False), ((15, 3), False), ((15, 5), False), ((16, 10), False), ((16, 8), False),
-        ((17, 4), False), ((17, 1), False)
+        ((3, 2), False), ((4, 3), False), ((3, 7), False), ((4, 9), False), ((5, 6), False),
+        ((5, 5), True), ((6, 8), True), ((6, 6), False), ((6, 3), False), ((6, 2), True),
+        ((6, 1), True), ((7, 1), False), ((7, 4), False), ((7, 8), True), ((8, 9), False),
+        ((9, 7), True), ((9, 4), True), ((9, 2), False), ((10, 6), False), ((10, 10), True),
+        ((11, 10), True), ((11, 3), True), ((12, 7), False), ((12, 1), False), ((13, 3), False),
+        ((13, 8), False), ((13, 9), True), ((14, 8), True), ((14, 6), True), ((14, 5), True),
+        ((14, 1), True), ((15, 3), True), ((15, 5), True), ((16, 10), False), ((16, 8), True),
+        ((17, 4), False), ((17, 1), True)
     ]
 
 
