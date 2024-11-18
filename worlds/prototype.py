@@ -108,8 +108,6 @@ def load_gameplay(world: World):
 
     shop = Shop(player=player, grid_position=(11, 5))
 
-    cat = Cat(player = player, grid_position = (3, 8))
-
     gameplay_background = GameplayBackground()
     nutGUI = NutGUI(player = player, grid_position = (1, 3))
 
@@ -127,7 +125,6 @@ def load_gameplay(world: World):
         *ratholes,
         *nuts,
         shop, 
-        cat,
         *border,
         gameplay_background,
         nutGUI
