@@ -60,7 +60,7 @@ class Rat(GameObject):
         self.spawn_position = self.position.grid_position
 
         # Set health
-        self.max_health = 1
+        self.max_health = 6
         self.health = self.max_health
         self.on_death = on_death
 
