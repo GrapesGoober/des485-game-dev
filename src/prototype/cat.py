@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import Any
 import pygame
 from lib import Frame, GameObject, World, Sprite
@@ -19,38 +20,38 @@ SPRITES = get_sprites_list(SHEET, (16, 16), (3, 3))
 CAT = AnimationLoop([SPRITES[0]])
 
 
-DOWN_JUMP = AnimationLoop(SPRITES[0:3])
-RIGHT_JUMP = AnimationLoop(SPRITES[5:7])
-UP_JUMP = AnimationLoop(SPRITES[10:12])
-LEFT_JUMP = AnimationLoop(SPRITES[15:17])
+DOWN_JUMP = AnimationLoop(SPRITES[0:3], is_looping=False, interval_time=0.3)
+RIGHT_JUMP = AnimationLoop(SPRITES[5:7], is_looping=False, interval_time=0.3)
+UP_JUMP = AnimationLoop(SPRITES[10:12], is_looping=False, interval_time=0.3)
+LEFT_JUMP = AnimationLoop(SPRITES[15:17], is_looping=False, interval_time=0.3)
 
-DOWN_IDLE = AnimationLoop([SPRITES[0]])
-RIGHT_IDLE = AnimationLoop([SPRITES[5]])
-UP_IDLE = AnimationLoop([SPRITES[10]])
-LEFT_IDLE = AnimationLoop([SPRITES[15]])
+DOWN_IDLE = AnimationLoop([SPRITES[0]], is_looping=False, interval_time=0.3)
+RIGHT_IDLE = AnimationLoop([SPRITES[5]], is_looping=False, interval_time=0.3)
+UP_IDLE = AnimationLoop([SPRITES[10]], is_looping=False, interval_time=0.3)
+LEFT_IDLE = AnimationLoop([SPRITES[15]], is_looping=False, interval_time=0.3)
 
+class CatStates(Enum):
+    IDLE = 1        # show itself in front of tree, using DOWN_JUMP
+    WILL_POUNCE = 2 # wait for the idle to finish before start pouncing
+    POUNCE = 3      # jump towards player, using proper jump animation
+    CONFUSE = 4     # confused, then use UP_JUMP to go behind tree
+    RETURN = 5      # return to previous position, then deletes itself
 
 class Cat(GameObject):
-    def __init__(self, callback: Callable, **metadata: Any) -> None:
+    def __init__(self, player: Rat, grid_position: tuple[int, int]) -> None:
 
         # Set metadata
-        self.player: Rat = metadata['player']
-        self.position = GridPosition(metadata['grid_position'])
+        self.player: Rat = player
+        self.position = GridPosition(grid_position)
+        self.initial_position = grid_position
         self.position.parent_object = self
-        self.callback: Callable = callback
 
-        # Create sprite
         self.sprite = Sprite()
-
-        # Create animation
-        self.current_anim = DOWN_IDLE
-
-        # Duration
-        self.duration = 2000  # 2 seconds in milliseconds
-        self.start_time = None  # Timestamp when the Cat is created
+        self.sprite.layer = 5
+        self.current_anim: AnimationLoop = DOWN_IDLE
+        self.current_state = CatStates.IDLE
 
     def on_create(self, world: World) -> None:
-        self.start_time = pygame.time.get_ticks() 
         world.sprites.add(self.sprite)
         world.add(self.position)
 
@@ -67,18 +68,46 @@ class Cat(GameObject):
             self.position.grid_position = (next_x, next_y)
 
     def on_update(self, world: World, frame: Frame) -> None:
-
         self.sprite.x = self.position.grid_x * SIZE[0]
         self.sprite.y = self.position.grid_y * SIZE[1]
         self.sprite.src_image = self.current_anim.update(frame.dt)
 
-        # current_time = pygame.time.get_ticks()
-        # if current_time - self.start_time >= self.duration:
-        #     world.remove(self)
+        match self.current_state:
+            case CatStates.IDLE: ...
+            case CatStates.WILL_POUNCE:
+                if self.current_anim.is_done:
+                    self.current_state = CatStates.POUNCE
+                    self.current_anim.reset()
+                    self._jumps_towards(self.player.position.grid_position)
+            case CatStates.POUNCE:
+                if self.current_anim.is_done:
+                    self.current_state = CatStates.RETURN
+                    self._jumps_towards(self.initial_position)
+                    self.player.get_eaten(world)
+            case CatStates.RETURN:
+                if self.current_anim.is_done:
+                    world.remove(self)
 
-        for n in self.position.get_neighbours(world, manhat_dist=1):
-            if n.parent_object == self.player:
-                print("rat near cat")
-                self.callback()
+    # show itself in front of tree, using DOWN_JUMP animation
+    def show_in_front_of_tree(self) -> None:
+        self.current_state = CatStates.IDLE
+        self.current_anim = DOWN_JUMP
+        self.current_anim.reset()
 
+    # after show: jump towards player, using proper jump animation
+    def pounce_player(self) -> None:
+        self.current_state = CatStates.WILL_POUNCE
+        self.current_anim.reset()
 
+    # internal function to use for jumping animation
+    def _jumps_towards(self, to: tuple[int, int]) -> None:
+        if to[0] < self.position.grid_x:
+            self.current_anim = LEFT_JUMP
+        if to[0] > self.position.grid_x:
+            self.current_anim = RIGHT_JUMP  
+        if to[1] < self.position.grid_y:
+            self.current_anim = UP_JUMP
+        if to[1] > self.position.grid_y:
+            self.current_anim = DOWN_JUMP
+        self.current_anim.reset()
+        self.position.grid_position = to

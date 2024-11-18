@@ -55,7 +55,7 @@ def load_gameplay(world: World):
     
     tree_params = [
         ((6, 4), False), # tree1
-        ((7, 5), False), # 2
+        ((7, 5), True), # 2
         ((6, 9), False), # 3
         ((7, 11), False), # 4
         ((8, 8), False), # 5

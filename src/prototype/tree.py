@@ -42,7 +42,7 @@ class Tree(GameObject):
                     cat = Cat(player=self.player, grid_position=self.position.grid_position)
                     world.add(cat)
 
-                    # Check if the player has a tuna can, else gets eaten
+                    # Check if the player has a tuna can, else cat pounces player
                     if self.player.inventory.has_item(TunaCanInventoryGUI):
                         world.add(TunaCanGUI(player=self.player, cat=cat))
-                    else: self.player.get_eaten(world)
+                    else: cat.pounce_player()

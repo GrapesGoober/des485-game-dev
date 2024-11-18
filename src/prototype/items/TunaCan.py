@@ -153,13 +153,5 @@ class TunaCanGUI(GameObject):
             self.player.position.grid_position = self.player.previous_position
 
         elif pressed_key[pygame.K_n]:
-            print("Player: Get eaten")
-
-            # Player get eaten
-            self.player.get_eaten(world)
-
-            # Remove tuna can gui from world
+            self.cat.pounce_player()
             world.remove(self)
-
-            # Remove cat from world
-            world.remove(self.cat)
