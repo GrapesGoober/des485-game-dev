@@ -9,7 +9,7 @@ SIZE = 48, 48
 COLOR = (255, 255, 255)
 
 SHEET = pygame.image.load('src\images\Mouse_Walking_Sprite.png')
-SPRITES = get_sprites_list(SHEET, (16, 16), (7, 7))
+SPRITES = get_sprites_list(SHEET, (16, 16), (8, 8))
 DOWN_WALK = AnimationLoop(SPRITES[0:4])
 RIGHT_WALK = AnimationLoop(SPRITES[8:12])
 UP_WALK = AnimationLoop(SPRITES[16:20])

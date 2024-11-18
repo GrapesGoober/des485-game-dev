@@ -21,17 +21,20 @@ from src.staticpage.startpage.bg_startpage import BackgroundStartPage
 from src.staticpage.startpage.textbox_cheesehunter import TextCheeseHunter
 from src.staticpage.startpage.textbox_start import TextStart
 from src.staticpage.startpage.rat_startpage import RatStartPage
-from src.staticpage.gameoverpage.bg_gameoverpage import BackgroundGameOverPage
-from src.staticpage.gameoverpage.textbox_gameover import TextGameOver
-from src.staticpage.gameoverpage.textbox_restart import TextRestart
-from src.staticpage.gameoverpage.rat_missioncompleted import RatMissionCompleted
-from src.staticpage.gameoverpage.cheese_missioncompleted import CheeseMissionCompleted
+
+from src.staticpage.gameoverMissionCompleted.bg_gameoverpage import BackgroundGameOverPage
+from src.staticpage.gameoverMissionCompleted.textbox_gameover import TextGameOver
+from src.staticpage.gameoverMissionCompleted.textbox_restart import TextRestart
+from src.staticpage.gameoverMissionCompleted.rat_missioncompleted import RatMissionCompleted
+from src.staticpage.gameoverMissionCompleted.cheese_missioncompleted import CheeseMissionCompleted
+
+from src.staticpage.gameoverMissionFailed.bg_gameover_failed import BackgroundGameOverFailPage
+from src.staticpage.gameoverMissionFailed.cat_mission_failed import CatMissionFailed
 
 def load_start_screen(world: World):
 
     world.add(
-        BackgroundStartPage(),
-        TextStart(callback= lambda: load_gameplay(world)),
+        BackgroundStartPage(callback= lambda: load_gameplay(world)),
         RatStartPage((13.5, 10))
     )   
 
@@ -99,8 +102,8 @@ def load_gameplay(world: World):
     star_positions = [(11, 9), (16, 9), (19, 4)]
     stars = [Star(player=player, grid_position=position) for position in star_positions]
 
-    cheese = Cheese(player, callback= lambda: load_end_screen(world), grid_position= (20, 12))
-    cheese2 = Cheese(player, callback= lambda: load_end_screen(world), grid_position= (8, 3))
+    cheese = Cheese(player, callback= lambda: load_end_screen_mission_completed(world), grid_position= (20, 12))
+    # cheese2 = Cheese(player, callback= lambda: load_end_screen_mission_completed(world), grid_position= (8, 3))
 
     rathole_positions = [(7, 12), (11, 3), (16, 3)]
     ratholes = [RatHole(player=player, grid_position=position) for position in rathole_positions]
@@ -109,6 +112,8 @@ def load_gameplay(world: World):
     nuts = [Nut(player=player, grid_position=position) for position in nut_positions]
 
     shop = Shop(player=player, grid_position=(14, 7))
+
+    cat = Cat(player = player, grid_position = (6, 10), callback= lambda: load_end_screen_mission_failed(world))
 
     world.add(
         GrassField(grid_position=(13, 8)),
@@ -126,17 +131,25 @@ def load_gameplay(world: World):
         *ratholes,
         *nuts,
         shop, 
-        cheese2
+        cat
     )
 
-def load_end_screen(world: World):#
+def load_end_screen_mission_completed(world: World):
     # clear exisiting items before adding new ones
     world.remove(*world.gameobjects)
     # add whatever gameobject you need here
     world.add(
-        BackgroundGameOverPage(),
-        RatMissionCompleted((15, 8)),
-        CheeseMissionCompleted((12, 8))
+        BackgroundGameOverPage(callback= lambda: load_gameplay(world)),
+        RatMissionCompleted((13, 7)),
+        CheeseMissionCompleted((600, 400))
         # TextGameOver(),
         # TextRestart(callback= lambda: load_gameplay(world))
     )   
+
+def load_end_screen_mission_failed(world: World):
+    world.remove(*world.gameobjects)
+    world.add(
+        BackgroundGameOverFailPage(callback= lambda: load_gameplay(world)),
+        CatMissionFailed(grid_position = (13, 7))
+    )
+
