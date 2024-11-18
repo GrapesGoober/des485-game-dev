@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Callable
 import pygame
 from lib import Frame, GameObject, World, Sprite
 
@@ -7,7 +8,6 @@ from src.grid_position import GridPosition
 from src.prototype.diceroll import DiceRoll
 from src.get_sprites_list import get_sprites_list
 from src.animation_loop import AnimationLoop
-from worlds.prototype import load_end_screen_mission_failed
 
 SIZE = 48, 48
 COLOR = (255, 255, 255)
@@ -32,7 +32,11 @@ class RatStates(Enum):
     ENGAGE_CAT  = 5
 
 class Rat(GameObject):
-    def __init__(self, dice: DiceRoll, grid_position: tuple[int, int], inventory: InventoryGUI) -> None:
+    def __init__(self, 
+                 dice: DiceRoll, 
+                 grid_position: tuple[int, int], 
+                 inventory: InventoryGUI,
+                 on_death: Callable) -> None:
 
         # Create sprite
         self.sprite = Sprite()
@@ -57,6 +61,7 @@ class Rat(GameObject):
         # Set health
         self.max_health = 3
         self.health = self.max_health
+        self.on_death = on_death
 
         # previous position
         self.previous_position = self.position.grid_position
@@ -89,7 +94,7 @@ class Rat(GameObject):
     def get_eaten(self, world: World) -> None:
         self.health -= 1
         if self.health <= 0:
-            load_end_screen_mission_failed(world)
+            self.on_death()
         else:
             self.position.grid_position = self.spawn_position
             self.diceroll.walk_step = 0

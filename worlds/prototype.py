@@ -47,7 +47,11 @@ def load_gameplay(world: World):
     # some objects are needed as dependency
     dice = DiceRoll((50, 50))
     inventory_gui = InventoryGUI((1180, 100))
-    player = Rat(dice=dice, grid_position=(6, 3), inventory=inventory_gui)
+    player = Rat(
+        dice=dice, 
+        grid_position=(6, 3), 
+        inventory=inventory_gui,
+        on_death= lambda: load_end_screen_mission_completed(world))
     
     tree_params = [
         ((6, 4), False), # tree1
