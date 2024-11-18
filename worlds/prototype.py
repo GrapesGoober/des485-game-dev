@@ -10,12 +10,15 @@ from src.prototype.inventory import InventoryGUI
 from src.prototype.diceroll import DiceRoll
 from src.prototype.rat import Rat
 from src.prototype.cat import Cat
+from src.prototype.gameplay_background import GameplayBackground
 from src.prototype.bordergrass import BorderGrass
 from src.prototype.items.Rainbow import Rainbow
 from src.prototype.items.Star import Star
 from src.prototype.items.cheese import Cheese
 from src.prototype.items.RatHole import RatHole
 from src.prototype.items.Nut import Nut
+from src.prototype.nut_gui import NutGUI
+
 
 
 from src.staticpage.startpage.bg_startpage import BackgroundStartPage
@@ -46,7 +49,7 @@ def load_gameplay(world: World):
     world.remove(*world.gameobjects)
 
     # some objects are needed as dependency
-    dice = DiceRoll((1210, 660))
+    dice = DiceRoll((80, 85))
     inventory_gui = InventoryGUI((1180, 100))
     player = Rat(
         dice=dice, 
@@ -106,6 +109,9 @@ def load_gameplay(world: World):
 
     cat = Cat(player = player, grid_position = (3, 8))
 
+    gameplay_background = GameplayBackground()
+    nutGUI = NutGUI(player = player, grid_position = (1, 3))
+
     world.add(
         GrassField(grid_position=(13, 8)),
         player,
@@ -113,9 +119,6 @@ def load_gameplay(world: World):
         *trees,
         dice,
         inventory_gui,
-        # I think the item prompt is clunky
-        # Imma remove this for the time being
-        # ItemUsePrompt(player),
         *rainbows,
         *stars,
         cheese,
@@ -123,8 +126,9 @@ def load_gameplay(world: World):
         *nuts,
         shop, 
         cat,
-        *border
-        # *border
+        *border,
+        gameplay_background,
+        nutGUI
     )
 
 def load_end_screen_mission_completed(world: World):
