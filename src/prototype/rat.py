@@ -73,6 +73,9 @@ class Rat(GameObject):
         world.remove(self.position)
 
     def move(self, amount: tuple[int, int], world: World) -> None:
+        if self.current_state == RatStates.USE_ITEM:
+            self.current_state = RatStates.WALK
+
         self.previous_position = self.position.grid_position
         next_x, next_y = self.position.grid_position
         next_x += amount[0]
@@ -100,10 +103,7 @@ class Rat(GameObject):
             case RatStates.DICEROLL:
                 if self.diceroll.can_walk:
                     self.current_state = RatStates.USE_ITEM
-            case RatStates.USE_ITEM:
-                # this state is controlled by the ItemUsePrompt
-                ...
-            case RatStates.WALK:
+            case RatStates.WALK | RatStates.USE_ITEM:
                 for event in frame.events:
                     if self.diceroll.walk_step > 0:
                         if event.type == pygame.KEYDOWN:

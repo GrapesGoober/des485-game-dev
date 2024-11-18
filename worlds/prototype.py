@@ -122,7 +122,9 @@ def load_gameplay(world: World):
         *trees,
         dice,
         inventory_gui,
-        ItemUsePrompt(player),
+        # I think the item prompt is clunky
+        # Imma remove this for the time being
+        # ItemUsePrompt(player),
         *rainbows,
         *stars,
         cheese,

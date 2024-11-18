@@ -22,7 +22,6 @@ class ItemUsePrompt(GameObject):
         self.sprite = Sprite()
         self.sprite.src_image = pygame.Surface((400, 100))
         self.sprite.src_image.fill((255, 255, 255))
-
         text_surface = FONT.render(
             "This is time to use your items!", 
             True, 
