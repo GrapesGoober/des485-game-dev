@@ -20,7 +20,9 @@ class BackgroundStartPage(GameObject):
         self.callback: Callable = callback
 
     def on_create(self, world: World) -> None:
-        pass
+        # Play sound
+        pygame.mixer.music.load('src/sound/startpage.mp3')
+        pygame.mixer.music.play(-1)
 
     def on_remove(self, world: World) -> None:
         pass
@@ -31,6 +33,11 @@ class BackgroundStartPage(GameObject):
         for event in frame.events:
             if event.type == pygame.KEYDOWN: 
                 if event.key == pygame.K_RETURN:
+
+                    # Play sound
+                    pygame.mixer.music.stop()
+                    pygame.mixer.Sound.play(pygame.mixer.Sound('src/sound/start_pressed.mp3'))
+
                     self.callback()
 
 

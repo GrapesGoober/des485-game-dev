@@ -45,6 +45,9 @@ class Rainbow(GameObject):
                 print("Player: Rainbow collected")
                 world.remove(self)
 
+                # Play sound
+                pygame.mixer.Sound.play(pygame.mixer.Sound('src/sound/rainbow_collect.mp3'))
+
                 # Add item to inventory
                 item_gui = RainbowInventoryGUI(self)
                 world.add(item_gui)

@@ -60,7 +60,7 @@ class Rat(GameObject):
         self.spawn_position = self.position.grid_position
 
         # Set health
-        self.max_health = 6
+        self.max_health = 1
         self.health = self.max_health
         self.on_death = on_death
 
@@ -93,6 +93,9 @@ class Rat(GameObject):
             self.diceroll.walk_step -= 1
 
     def get_eaten(self, world: World) -> None:
+        # Play sound
+        pygame.mixer.Sound.play(pygame.mixer.Sound('src/sound/rat_eaten.mp3'))
+
         self.health -= 1
         if self.health <= 0:
             self.on_death()

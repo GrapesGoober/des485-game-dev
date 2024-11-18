@@ -19,7 +19,9 @@ class BackgroundGameOverFailPage(GameObject):
         self.callback: Callable = callback
 
     def on_create(self, world: World) -> None:
-        pass
+        # Play sound
+        pygame.mixer.music.load('src/sound/gameover.mp3')
+        pygame.mixer.music.play(-1)
 
     def on_remove(self, world: World) -> None:
         pass
@@ -30,6 +32,10 @@ class BackgroundGameOverFailPage(GameObject):
         for event in frame.events:
             if event.type == pygame.KEYDOWN: 
                 if event.key == pygame.K_RETURN:
+
+                    # Stop music
+                    pygame.mixer.music.stop()
+
                     self.callback()
 
 

@@ -78,6 +78,9 @@ class TunaCanShopGUI(GameObject):
                     # Remove nut from player
                     self.player.nut_counter -= ITEM_NUT_COST
 
+                    # Play sound
+                    pygame.mixer.Sound.play(pygame.mixer.Sound('src/sound/shop_buy.mp3'))
+
                     # Add item to inventory
                     item_gui = TunaCanInventoryGUI(self)
                     world.add(item_gui)
@@ -156,6 +159,9 @@ class TunaCanGUI(GameObject):
         pressed_key = pygame.key.get_pressed()
         if pressed_key[pygame.K_y]:
             print("Player: Tuna can used")
+
+            # Play sound
+            pygame.mixer.Sound.play(pygame.mixer.Sound('src/sound/tuna_can_used.mp3'))
 
             # Remove tuna can gui from world
             world.remove(self)

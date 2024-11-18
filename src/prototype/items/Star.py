@@ -44,6 +44,9 @@ class Star(GameObject):
                 print("Player: Star collected")
                 world.remove(self)
 
+                # Play sound
+                pygame.mixer.Sound.play(pygame.mixer.Sound('src/sound/star_collect.mp3'))
+
                 # Add item to inventory
                 item_gui = StarInventoryGUI(self)
                 world.add(item_gui)

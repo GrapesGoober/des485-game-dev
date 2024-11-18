@@ -32,4 +32,8 @@ class Cheese(GameObject):
     def on_update(self, world: World, frame: Frame) -> None:
         for n in self.position.get_neighbours(world):
             if n.parent_object == self.player:
+                
+                # Play sound
+                pygame.mixer.Sound.play(pygame.mixer.Sound('src/sound/cheese_collect.mp3'))
+
                 self.callback()
