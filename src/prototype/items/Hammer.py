@@ -8,8 +8,19 @@ from src.prototype.tree import Tree
 from src.prototype.rat import Rat, RatStates
 
 SIZE = 64, 64
-ITEM_NUT_COST = 1
+ITEM_NUT_COST = 10
 
+NUT_SIZE = 32, 32
+ITEM_NUT_COST = 10
+TEXT_COLOR = (255, 255, 255)
+COST_SPRITES_OFFSET = 60, 20
+
+NUT_IMAGE = pygame.transform.scale(
+    pygame.image.load("src/images/items/nut.png"),
+    NUT_SIZE
+)
+
+FONT = pygame.font.Font("src/fonts/Pixuf.ttf", 30) 
 
 class HammerShopGUI(GameObject):
     """
@@ -19,28 +30,42 @@ class HammerShopGUI(GameObject):
     Condition: The player can use the hammer to check if the tree has a cat on it by dragging the hammer item to the tree.
     """
 
-    def __init__(self, **metadata: Any) -> None:
-        super().__init__(**metadata)
+    def __init__(self, player: Rat, position: tuple[int, int]) -> None:
 
         # Set metadata
-        self.player: Rat = metadata['player']
+        self.player: Rat = player
 
         # Create sprite
         self.sprite = Sprite()
-        
         self.sprite.src_image = pygame.transform.scale(
             pygame.image.load("src/images/items/hammer.png"),
             SIZE
         )
-        self.sprite.position = metadata['position']
+        self.sprite.position = position
+
+        self.nut_sprite = Sprite()
+        self.nut_sprite.src_image = NUT_IMAGE
+        self.nut_sprite.x += position[0] + COST_SPRITES_OFFSET[0]
+        self.nut_sprite.y += position[1] - COST_SPRITES_OFFSET[1]
+        self.cost_sprite = Sprite()
+        self.cost_sprite.x += position[0] + COST_SPRITES_OFFSET[0]
+        self.cost_sprite.y += position[1] + COST_SPRITES_OFFSET[1]
+        self.cost_sprite.src_image = FONT.render(str(ITEM_NUT_COST), True, TEXT_COLOR)
 
     def on_create(self, world: 'World'):
-        world.sprites.add(self.sprite)
+        world.sprites.add(self.sprite, self.nut_sprite, self.cost_sprite)
 
     def on_remove(self, world: 'World'):
-        world.sprites.remove(self.sprite)
+        world.sprites.remove(self.sprite, self.nut_sprite, self.cost_sprite)
 
     def on_update(self, world, frame):
+
+        for s in [self.sprite, self.nut_sprite, self.cost_sprite]:
+            if self.player.nut_counter < ITEM_NUT_COST:
+                s.src_image.set_alpha(100)
+            if self.player.nut_counter >= ITEM_NUT_COST:
+                s.src_image.set_alpha(256)
+
         for e in frame.events:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
