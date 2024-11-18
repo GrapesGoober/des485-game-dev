@@ -51,7 +51,7 @@ def load_gameplay(world: World):
         dice=dice, 
         grid_position=(6, 3), 
         inventory=inventory_gui,
-        on_death= lambda: load_end_screen_mission_completed(world))
+        on_death= lambda: load_end_screen_mission_failed(world))
     
     tree_params = [
         ((6, 4), False), # tree1
@@ -117,7 +117,7 @@ def load_gameplay(world: World):
 
     shop = Shop(player=player, grid_position=(14, 7))
 
-    cat = Cat(player = player, grid_position = (6, 10), callback= lambda: load_end_screen_mission_failed(world))
+    cat = Cat(player = player, grid_position = (6, 10))
 
     world.add(
         GrassField(grid_position=(13, 8)),
