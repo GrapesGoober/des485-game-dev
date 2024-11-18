@@ -103,7 +103,7 @@ class Rat(GameObject):
             self.current_state = RatStates.DICEROLL
 
     def on_update(self, world: World, frame: Frame) -> None:
-        
+                        
         match self.current_state:
             case RatStates.DICEROLL:
                 if self.diceroll.can_walk:
@@ -131,6 +131,7 @@ class Rat(GameObject):
                         if self.current_anim == LEFT_WALK: self.current_anim = LEFT_IDLE
                         if self.current_anim == UP_WALK: self.current_anim = UP_IDLE
                         if self.current_anim == RIGHT_WALK: self.current_anim = RIGHT_IDLE
+
             case RatStates.WALK_END:
                 # this state would only enter this logic IF there are NO cats around to enter
                 # ENGAGE_CAT state. This state lasts for only 1 frame
@@ -138,7 +139,19 @@ class Rat(GameObject):
                 self.diceroll.roll_dice()
 
             case RatStates.ENGAGE_CAT:
+                # this state is managed by everything that is cat related
+                # stuff like trees, tuna cans, cats, etc
+                # it locks player to be unable to move, 
+                # and will return the player to DICEROLL when applicable
                 ...
+
+        # Just for demonstration in class in case we don't have enough coin to buy items from shop 
+        # Solution: press space bar to increase rat's nut
+        for event in frame.events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_n:
+                    self.nut_counter += 1
+
 
         self.sprite.x = self.position.grid_x * SIZE[0]
         self.sprite.y = self.position.grid_y * SIZE[1]
