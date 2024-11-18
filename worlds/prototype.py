@@ -1,4 +1,5 @@
 from lib import World
+from src.prototype.heart_gui import HeartGUI
 from src.prototype.item_use_prompt import ItemUsePrompt
 from src.prototype.GrassField import GrassField
 from src.prototype.items.cheese import Cheese
@@ -114,6 +115,7 @@ def load_gameplay(world: World):
 
     world.add(
         GrassField(grid_position=(13, 8)),
+        HeartGUI(player),
         player,
         *rocks,
         *trees,
