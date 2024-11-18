@@ -50,9 +50,11 @@ class Rainbow(GameObject):
                 world.add(item_gui)
                 self.player.inventory.add_item_gui(item_gui)
 
+                self.player.nut_counter += 3
+
+
     def use_item(self):
         self.player.diceroll.walk_step += 2
-        self.player.nut_counter += 3
 
 class RainbowInventoryGUI():
     def __init__(self, item: Rainbow) -> None:
